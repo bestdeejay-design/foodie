@@ -37,7 +37,7 @@ const appData = {
       address: '215 Main Street, Downtown',
       hours: '12:00 - 23:00',
       phone: '+1 (555) 111-2233',
-      image: 'https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?w=400&h=300&fit=crop',
+      image: 'images/trattoria.jpg',
       description: 'Authentic Italian cuisine in a warm, rustic setting. Handmade pasta, wood-fired pizzas, and an extensive wine list curated by our sommelier.',
       features: ['Outdoor seating', 'Wine bar', 'Private dining', 'Vegetarian options'],
       popular: ['Truffle Risotto', 'Margherita Pizza', 'Tiramisu'],
@@ -61,7 +61,7 @@ const appData = {
       address: '88 Harbor View Blvd',
       hours: '11:30 - 14:30, 17:30 - 22:00',
       phone: '+1 (555) 222-3344',
-      image: 'https://images.unsplash.com/photo-1579027989536-b7b1f875659b?w=400&h=300&fit=crop',
+      image: 'images/sakura.jpg',
       description: 'Premium Japanese dining experience. Omakase tasting menus, fresh sashimi flown daily, and a serene garden terrace.',
       features: ['Omakase', 'Sake bar', 'Garden terrace', 'Private tatami rooms'],
       popular: ['Omakase Tasting', 'Salmon Sashimi', 'Matcha Tiramisu'],
@@ -107,7 +107,7 @@ const appData = {
       address: '7 Bakery Lane',
       hours: '07:00 - 21:00',
       phone: '+1 (555) 444-5566',
-      image: 'https://images.unsplash.com/photo-1501339847302-ac426a4a7cbb?w=400&h=300&fit=crop',
+      image: 'images/le-petit-cafe.jpg',
       description: 'Cozy neighborhood cafe with artisan coffee, fresh pastries baked daily, and light brunch fare. Perfect for remote work.',
       features: ['Free WiFi', 'Pet-friendly', 'Brunch menu', 'Outdoor seating'],
       popular: ['Avocado Toast', 'Flat White', 'Croissants'],
@@ -470,7 +470,7 @@ function renderRestaurantCard(r) {
   const isFav = appData.favorites.includes(r.id);
   return `
     <div class="dashboard-card" style="margin-bottom:12px;padding:0;overflow:hidden" onclick="showPage('restaurant-${r.id}')">
-      <div style="height:140px;background:linear-gradient(135deg, var(--bg-light), var(--bg-card));display:flex;align-items:flex-end;justify-content:flex-end;padding:12px">
+      <div style="height:140px;background-image:url('${r.image}');background-size:cover;background-position:center;display:flex;align-items:flex-end;justify-content:flex-end;padding:12px">
         <button style="background:rgba(0,0,0,0.5);border:none;border-radius:50%;width:36px;height:36px;display:flex;align-items:center;justify-content:center;color:${isFav ? '#ef4444' : '#fff'};cursor:pointer;z-index:1" onclick="event.stopPropagation();toggleFavorite(${r.id})">
           <svg style="width:20px;height:20px"><use href="#icon-heart"/></svg>
         </button>
@@ -753,7 +753,7 @@ function renderRestaurant(id) {
 
   // Hero image placeholder
   html += `
-    <div style="height:180px;background:linear-gradient(135deg, var(--bg-light), var(--bg-card));border-radius:16px;margin-bottom:16px;display:flex;align-items:center;justify-content:center;position:relative">
+      <div style="height:180px;background-image:url('${r.image}');background-size:cover;background-position:center;border-radius:16px;margin-bottom:16px;display:flex;align-items:center;justify-content:center;position:relative">
       <button style="position:absolute;top:12px;right:12px;background:rgba(0,0,0,0.5);border:none;border-radius:50%;width:40px;height:40px;display:flex;align-items:center;justify-content:center;color:${isFav ? '#ef4444' : '#fff'};cursor:pointer;z-index:1" onclick="toggleFavorite(${r.id})">
         <svg style="width:22px;height:22px"><use href="#icon-heart"/></svg>
       </button>
