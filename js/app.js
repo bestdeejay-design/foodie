@@ -153,7 +153,7 @@ const appData = {
       address: '55 Curry Road',
       hours: '11:00 - 22:30',
       phone: '+1 (555) 666-7788',
-      image: '',
+      image: 'images/the-spice-route.jpg',
       description: 'Authentic Indian cuisine from across the subcontinent. Tandoori dishes, rich curries, and fresh naan from the clay oven.',
       features: ['Tandoor oven', 'Vegetarian menu', 'Lunch buffet', 'Takeaway'],
       popular: ['Butter Chicken', 'Lamb Vindaloo', 'Garlic Naan'],
