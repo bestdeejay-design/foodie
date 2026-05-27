@@ -84,7 +84,7 @@ const appData = {
       address: '42 Fiesta Avenue',
       hours: '10:00 - 22:00',
       phone: '+1 (555) 333-4455',
-      image: 'https://images.unsplash.com/photo-1555396273-367ea4eb4db5?w=400&h=300&fit=crop',
+      image: 'images/El-Sol-Kitchen.jpg',
       description: 'Vibrant Mexican cantina with bold flavors. Street tacos, fresh guacamole made tableside, and the best margaritas in town.',
       features: ['Live music', 'Outdoor patio', 'Happy hour', 'Gluten-free options'],
       popular: ['Street Tacos', 'Tableside Guacamole', 'Churros'],
@@ -130,7 +130,7 @@ const appData = {
       address: '12 Pier Street, Waterfront',
       hours: '12:00 - 15:00, 18:00 - 23:00',
       phone: '+1 (555) 555-6677',
-      image: 'https://images.unsplash.com/photo-1550966871-3ed3cdb51f3a?w=400&h=300&fit=crop',
+      image: '',
       description: 'Waterfront fine dining with sustainably sourced seafood. Oyster bar, seasonal tasting menus, and sunset views over the harbor.',
       features: ['Waterfront view', 'Oyster bar', 'Tasting menu', 'Wine pairing'],
       popular: ['Oyster Platter', 'Lobster Thermidor', 'Seared Tuna'],
@@ -153,7 +153,7 @@ const appData = {
       address: '55 Curry Road',
       hours: '11:00 - 22:30',
       phone: '+1 (555) 666-7788',
-      image: 'https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?w=400&h=300&fit=crop',
+      image: '',
       description: 'Authentic Indian cuisine from across the subcontinent. Tandoori dishes, rich curries, and fresh naan from the clay oven.',
       features: ['Tandoor oven', 'Vegetarian menu', 'Lunch buffet', 'Takeaway'],
       popular: ['Butter Chicken', 'Lamb Vindaloo', 'Garlic Naan'],
@@ -177,7 +177,7 @@ const appData = {
       address: '99 Liberty Square',
       hours: '11:00 - 00:00',
       phone: '+1 (555) 777-8899',
-      image: 'https://images.unsplash.com/photo-1550547660-d9450f859349?w=400&h=300&fit=crop',
+      image: 'images/Burger-Republic.jpg',
       description: 'Craft burgers, loaded fries, and hand-spun milkshakes. A modern take on the classic American diner with local ingredients.',
       features: ['Craft beer', 'Late night', 'Kids menu', 'Takeaway'],
       popular: ['Double Smash Burger', 'Truffle Fries', 'Oreo Shake'],
@@ -200,7 +200,7 @@ const appData = {
       address: '33 Bamboo Street',
       hours: '12:00 - 22:00',
       phone: '+1 (555) 888-9900',
-      image: 'https://images.unsplash.com/photo-1559314809-0d155014e29e?w=400&h=300&fit=crop',
+      image: '',
       description: 'Family-run Thai restaurant with recipes passed down three generations. Fragrant curries, wok-fired noodles, and tropical desserts.',
       features: ['Family-run', 'Vegan options', 'BYOB', 'Cozy atmosphere'],
       popular: ['Pad Thai', 'Green Curry', 'Mango Sticky Rice'],
@@ -470,7 +470,7 @@ function renderRestaurantCard(r) {
   const isFav = appData.favorites.includes(r.id);
   return `
     <div class="dashboard-card" style="margin-bottom:12px;padding:0;overflow:hidden" onclick="showPage('restaurant-${r.id}')">
-      <div style="height:140px;background-image:url('${r.image}');background-size:cover;background-position:center;display:flex;align-items:flex-end;justify-content:flex-end;padding:12px">
+      <div style="height:140px;${r.image ? `background-image:url('${r.image}');background-size:cover;background-position:center;` : 'background:linear-gradient(135deg, var(--bg-light), var(--bg-card));'}display:flex;align-items:flex-end;justify-content:flex-end;padding:12px">
         <button style="background:rgba(0,0,0,0.5);border:none;border-radius:50%;width:36px;height:36px;display:flex;align-items:center;justify-content:center;color:${isFav ? '#ef4444' : '#fff'};cursor:pointer;z-index:1" onclick="event.stopPropagation();toggleFavorite(${r.id})">
           <svg style="width:20px;height:20px"><use href="#icon-heart"/></svg>
         </button>
@@ -753,7 +753,7 @@ function renderRestaurant(id) {
 
   // Hero image placeholder
   html += `
-      <div style="height:180px;background-image:url('${r.image}');background-size:cover;background-position:center;border-radius:16px;margin-bottom:16px;display:flex;align-items:center;justify-content:center;position:relative">
+      <div style="height:180px;${r.image ? `background-image:url('${r.image}');background-size:cover;background-position:center;` : 'background:linear-gradient(135deg, var(--bg-light), var(--bg-card));'}border-radius:16px;margin-bottom:16px;display:flex;align-items:center;justify-content:center;position:relative">
       <button style="position:absolute;top:12px;right:12px;background:rgba(0,0,0,0.5);border:none;border-radius:50%;width:40px;height:40px;display:flex;align-items:center;justify-content:center;color:${isFav ? '#ef4444' : '#fff'};cursor:pointer;z-index:1" onclick="toggleFavorite(${r.id})">
         <svg style="width:22px;height:22px"><use href="#icon-heart"/></svg>
       </button>
