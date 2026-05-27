@@ -211,6 +211,144 @@ const appData = {
         { name: 'Green Curry', price: 19, category: 'Mains', description: 'Coconut curry with chicken and vegetables' },
         { name: 'Mango Sticky Rice', price: 10, category: 'Desserts', description: 'Sweet mango with coconut sticky rice' }
       ]
+    },
+    {
+      id: 9,
+      name: 'Bistro Parisien',
+      cuisine: 'french',
+      rating: 4.7,
+      reviews: 215,
+      price: '$$$',
+      priceRange: '$35-65',
+      address: '18 Rue de Lafayette',
+      hours: '12:00 - 15:00, 18:00 - 23:00',
+      phone: '+1 (555) 999-0011',
+      image: '',
+      description: 'Classic French bistro with a modern twist. Escargots, coq au vin, and the finest crème brûlée in town. Seasonal tasting menus.',
+      features: ['Tasting menu', 'Wine pairing', 'Romantic', 'Outdoor terrace'],
+      popular: ['French Onion Soup', 'Coq au Vin', 'Crème Brûlée'],
+      menu: [
+        { name: 'French Onion Soup', price: 14, category: 'Starters', description: 'Caramelized onions, gruyère, crusty bread' },
+        { name: 'Escargots', price: 18, category: 'Starters', description: 'Burgundy snails with garlic butter & parsley' },
+        { name: 'Coq au Vin', price: 32, category: 'Mains', description: 'Braised chicken in red wine with mushrooms' },
+        { name: 'Steak Frites', price: 38, category: 'Mains', description: 'Pan-seared ribeye with béarnaise, crispy frites' },
+        { name: 'Crème Brûlée', price: 13, category: 'Desserts', description: 'Classic vanilla custard with caramelized sugar' }
+      ]
+    },
+    {
+      id: 10,
+      name: 'Dragon Palace',
+      cuisine: 'chinese',
+      rating: 4.5,
+      reviews: 389,
+      price: '$$',
+      priceRange: '$15-35',
+      address: '72 Golden Avenue',
+      hours: '11:00 - 22:30',
+      phone: '+1 (555) 888-1122',
+      image: '',
+      description: 'Authentic Cantonese and Sichuan cuisine. Dim sum trolley on weekends, Peking duck carved tableside, and hand-pulled noodles.',
+      features: ['Dim sum', 'Private rooms', 'Large groups', 'Delivery'],
+      popular: ['Peking Duck', 'Xiao Long Bao', 'Kung Pao Chicken'],
+      menu: [
+        { name: 'Har Gow (4)', price: 10, category: 'Dim Sum', description: 'Steamed shrimp dumplings with translucent wrapper' },
+        { name: 'Xiao Long Bao (6)', price: 13, category: 'Dim Sum', description: 'Soup dumplings with pork & ginger' },
+        { name: 'Peking Duck', price: 48, category: 'Mains', description: 'Crispy skin, pancakes, hoisin, serves 2' },
+        { name: 'Kung Pao Chicken', price: 19, category: 'Mains', description: 'Wok-fried with peanuts, chili & Sichuan pepper' },
+        { name: 'Egg Tarts (3)', price: 8, category: 'Desserts', description: 'Flaky pastry with silky egg custard' }
+      ]
+    },
+    {
+      id: 11,
+      name: 'Azure Mediterranean',
+      cuisine: 'mediterranean',
+      rating: 4.6,
+      reviews: 178,
+      price: '$$$',
+      priceRange: '$30-55',
+      address: '25 Marina Bay',
+      hours: '11:30 - 22:30',
+      phone: '+1 (555) 777-3344',
+      image: '',
+      description: 'Sun-soaked flavors of Greece, Turkey, and Lebanon. Mezze platters, grilled seafood, and fresh herbs from our rooftop garden.',
+      features: ['Rooftop dining', 'Mezze bar', 'Gluten-free', 'Vegetarian'],
+      popular: ['Mezze Platter', 'Grilled Octopus', 'Baklava'],
+      menu: [
+        { name: 'Hummus & Pita', price: 10, category: 'Mezze', description: 'Creamy chickpea, tahini, olive oil, warm pita' },
+        { name: 'Mezze Platter', price: 24, category: 'Mezze', description: 'Hummus, baba ganoush, falafel, dolmades, olives' },
+        { name: 'Grilled Octopus', price: 28, category: 'Mains', description: 'Charcoal-grilled with lemon, oregano & capers' },
+        { name: 'Lamb Kofta', price: 26, category: 'Mains', description: 'Spiced lamb skewers with tzatziki & rice' },
+        { name: 'Baklava', price: 11, category: 'Desserts', description: 'Layers of phyllo, walnuts, honey syrup' }
+      ]
+    },
+    {
+      id: 12,
+      name: 'Smoke & Barrel',
+      cuisine: 'bbq',
+      rating: 4.4,
+      reviews: 521,
+      price: '$$',
+      priceRange: '$20-40',
+      address: '8 Hickory Road',
+      hours: '12:00 - 23:00',
+      phone: '+1 (555) 666-5566',
+      image: '',
+      description: 'Texas-style BBQ slow-smoked over hickory for 14 hours. Brisket, ribs, house-made sauces, and craft bourbon from our barrel selection.',
+      features: ['Live blues', 'Bourbon bar', 'Outdoor yard', 'Large groups'],
+      popular: ['Beef Brisket', 'Baby Back Ribs', 'Mac & Cheese'],
+      menu: [
+        { name: 'Smoked Wings', price: 14, category: 'Starters', description: 'Dry-rubbed, smoked, choice of sauce' },
+        { name: 'Beef Brisket', price: 26, category: 'Mains', description: '14-hour smoked, peppery bark, 200g slice' },
+        { name: 'Baby Back Ribs', price: 28, category: 'Mains', description: 'Full rack, fall-off-the-bone, house glaze' },
+        { name: 'Pulled Pork', price: 22, category: 'Mains', description: 'Carolina-style with vinegar slaw & cornbread' },
+        { name: 'Mac & Cheese', price: 9, category: 'Sides', description: 'Four-cheese blend, crispy breadcrumb top' }
+      ]
+    },
+    {
+      id: 13,
+      name: 'Vino & Forno',
+      cuisine: 'italian',
+      rating: 4.8,
+      reviews: 294,
+      price: '$$',
+      priceRange: '$20-40',
+      address: '61 Vineyard Lane',
+      hours: '17:00 - 00:00',
+      phone: '+1 (555) 555-8899',
+      image: '',
+      description: 'Neapolitan pizzeria and natural wine bar. 48-hour fermented dough, San Marzano tomatoes, and 100+ labels from small producers.',
+      features: ['Natural wine', 'Wood-fired oven', 'Late night', 'Pet-friendly'],
+      popular: ['Margherita DOP', 'Diavola', 'Natural Wine Flight'],
+      menu: [
+        { name: 'Margherita DOP', price: 16, category: 'Pizza', description: 'San Marzano DOP, buffalo mozzarella, basil' },
+        { name: 'Diavola', price: 19, category: 'Pizza', description: 'Spicy salami, nduja, chili honey' },
+        { name: 'Tartufo', price: 22, category: 'Pizza', description: 'Mushroom cream, truffle oil, parmesan flakes' },
+        { name: 'Burrata Salad', price: 15, category: 'Starters', description: 'Creamy burrata, heirloom tomatoes, balsamic' },
+        { name: 'Natural Wine Flight', price: 22, category: 'Drinks', description: '3 glasses from our curated selection' }
+      ]
+    },
+    {
+      id: 14,
+      name: 'Hop & Hearth',
+      cuisine: 'american',
+      rating: 4.3,
+      reviews: 412,
+      price: '$$',
+      priceRange: '$15-30',
+      address: '44 Brewery Street',
+      hours: '11:00 - 01:00',
+      phone: '+1 (555) 444-1122',
+      image: '',
+      description: 'Gastropub with 24 craft taps and elevated comfort food. House-ground burgers, beer-battered fish & chips, and weekend brunch.',
+      features: ['Craft beer', 'Brunch', 'Sports TV', 'Late night'],
+      popular: ['Pub Burger', 'Fish & Chips', 'Pretzel Board'],
+      menu: [
+        { name: 'Pretzel Board', price: 15, category: 'Starters', description: 'Giant soft pretzel, beer cheese, mustard' },
+        { name: 'Pub Burger', price: 17, category: 'Mains', description: 'House-ground patty, aged cheddar, bacon jam' },
+        { name: 'Fish & Chips', price: 19, category: 'Mains', description: 'Beer-battered cod, triple-cooked chips, tartar' },
+        { name: 'Wings (10)', price: 16, category: 'Sides', description: 'Choice of buffalo, BBQ, or gochujang glaze' },
+        { name: 'Sticky Toffee Pudding', price: 11, category: 'Desserts', description: 'Warm date cake, toffee sauce, vanilla ice cream' }
+      ]
     }
   ],
 
