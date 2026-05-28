@@ -37,7 +37,7 @@ function showWebChat() {
   html += '<h2>' + t('chat_title') + '</h2>';
   html += '<div style="display:flex;flex-direction:column;gap:12px;margin-top:20px">';
   appData.chats.forEach(function(c) {
-    html += '<div class="web-info-card" style="padding:16px;display:flex;align-items:center;gap:16px;cursor:pointer">' +
+    html += '<div class="web-info-card" style="padding:16px;display:flex;align-items:center;gap:16px">' +
       '<div style="width:48px;height:48px;border-radius:50%;background:var(--bg-light);display:flex;align-items:center;justify-content:center;font-size:22px;flex-shrink:0">' + c.icon + '</div>' +
       '<div style="flex:1;min-width:0">' +
         '<div style="font-weight:600;font-size:15px;margin-bottom:2px">' + c.name + '</div>' +
@@ -50,6 +50,113 @@ function showWebChat() {
     '</div>';
   });
   html += '</div></div>';
+  content.innerHTML = html;
+}
+
+function showWebBookings() {
+  var content = document.getElementById('webContent');
+  var active = appData.bookings.filter(function(b) { return b.status !== 'completed'; });
+  var past = appData.bookings.filter(function(b) { return b.status === 'completed'; });
+
+  var html = '<div class="web-center-col">';
+  html += '<button class="web-back-btn" onclick="showHome()"><svg style="width:18px;height:18px"><use href="#icon-arrow-left"/></svg> ' + t('landing_exit') + '</button>';
+  html += '<h2>' + t('bookings_title') + '</h2>';
+
+  if (active.length > 0) {
+    html += '<h3 style="margin:20px 0 12px;font-size:15px;color:var(--text-muted)">' + t('bookings_active') + '</h3>';
+    active.forEach(function(b) {
+      html += '<div class="web-info-card" style="margin-bottom:12px;padding:16px;cursor:pointer" onclick="showRestaurant(' + b.restaurantId + ')">' +
+        '<div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:8px">' +
+          '<div><strong>' + b.restaurantName + '</strong><div style="font-size:13px;color:var(--text-muted);margin-top:4px">' + b.date + ' at ' + b.time + '</div>' +
+          '<div style="font-size:12px;color:var(--text-muted);margin-top:2px">' + b.guests + ' ' + t('bookings_guests') + (b.special ? ' &bull; ' + b.special : '') + '</div></div>' +
+          '<span style="font-size:11px;padding:4px 10px;border-radius:12px;background:' + (b.status === 'confirmed' ? 'rgba(39,174,96,0.15)' : 'rgba(243,156,18,0.15)') + ';color:' + (b.status === 'confirmed' ? 'var(--success)' : 'var(--warning)') + ';font-weight:600">' + b.status + '</span>' +
+        '</div>' +
+      '</div>';
+    });
+  }
+
+  if (past.length > 0) {
+    html += '<h3 style="margin:20px 0 12px;font-size:15px;color:var(--text-muted)">' + t('bookings_past') + '</h3>';
+    past.forEach(function(b) {
+      html += '<div class="web-info-card" style="margin-bottom:12px;padding:16px;opacity:0.7">' +
+        '<strong>' + b.restaurantName + '</strong>' +
+        '<div style="font-size:13px;color:var(--text-muted);margin-top:4px">' + b.date + ' &bull; ' + b.guests + ' ' + t('bookings_guests') + '</div>' +
+      '</div>';
+    });
+  }
+
+  if (active.length === 0 && past.length === 0) {
+    html += '<div class="web-empty"><p style="color:var(--text-muted)">' + t('bookings_empty') + '</p></div>';
+  }
+
+  html += '</div>';
+  content.innerHTML = html;
+}
+
+function showWebOrders() {
+  var content = document.getElementById('webContent');
+  var orders = appData.orders;
+
+  var html = '<div class="web-center-col">';
+  html += '<button class="web-back-btn" onclick="showHome()"><svg style="width:18px;height:18px"><use href="#icon-arrow-left"/></svg> ' + t('landing_exit') + '</button>';
+  html += '<h2>Orders</h2>';
+
+  if (orders.length === 0) {
+    html += '<div class="web-empty"><p style="color:var(--text-muted)">No orders yet</p></div>';
+  } else {
+    orders.slice().reverse().forEach(function(o) {
+      var items = o.items.map(function(i) { return i.qty + 'x ' + loc(i.name, i.nameRu); }).join(', ');
+      html += '<div class="web-info-card" style="margin-bottom:12px;padding:16px">' +
+        '<div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:8px">' +
+          '<div><strong>' + o.restaurantName + '</strong></div>' +
+          '<span style="font-size:11px;padding:4px 10px;border-radius:12px;background:rgba(39,174,96,0.15);color:var(--success);font-weight:600">' + o.status + '</span>' +
+        '</div>' +
+        '<div style="font-size:13px;color:var(--text-muted);margin-bottom:8px">' + items + '</div>' +
+        '<div style="display:flex;justify-content:space-between;align-items:center">' +
+          '<span style="font-size:12px;color:var(--text-muted)">' + o.time + '</span>' +
+          '<strong style="font-size:16px">$' + o.total.toFixed(2) + '</strong>' +
+        '</div>' +
+        '<div style="font-size:11px;color:var(--text-muted);margin-top:6px"><svg style="width:12px;height:12px;vertical-align:middle;margin-right:4px"><use href="#icon-location"/></svg>' + o.address + '</div>' +
+      '</div>';
+    });
+  }
+
+  html += '</div>';
+  content.innerHTML = html;
+}
+
+function showWebProfile() {
+  var p = appData.profile;
+  var content = document.getElementById('webContent');
+
+  var html = '<div class="web-center-col">';
+  html += '<button class="web-back-btn" onclick="showHome()"><svg style="width:18px;height:18px"><use href="#icon-arrow-left"/></svg> ' + t('landing_exit') + '</button>';
+
+  html += '<div style="text-align:center;margin-bottom:32px">' +
+    '<div style="width:80px;height:80px;border-radius:50%;background:var(--primary);color:#fff;display:flex;align-items:center;justify-content:center;font-size:28px;font-weight:700;margin:0 auto 16px">' + p.avatar + '</div>' +
+    '<h2>' + p.name + '</h2>' +
+    '<p style="color:var(--text-muted)">' + t('profile_name_label') + '</p>' +
+  '</div>';
+
+  html += '<div class="web-info-card">' +
+    '<div class="web-info-row"><span class="web-info-label">' + t('profile_email') + '</span><span class="web-info-value">' + p.email + '</span></div>' +
+    '<div class="web-info-row"><span class="web-info-label">' + t('profile_phone') + '</span><span class="web-info-value">' + p.phone + '</span></div>' +
+    '<div class="web-info-row"><span class="web-info-label">' + t('profile_dietary') + '</span><span class="web-info-value">' + p.dietary.join(', ') + '</span></div>' +
+    '<div class="web-info-row"><span class="web-info-label">Address</span><span class="web-info-value">' + (p.address || '—') + '</span></div>' +
+  '</div>';
+
+  html += '<h3 style="margin:24px 0 12px">' + t('profile_fav_cuisines') + '</h3>';
+  html += '<div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:24px">' +
+    p.favoriteCuisines.map(function(c) { return '<span style="padding:8px 16px;background:var(--bg-card);border:1px solid var(--border);border-radius:20px;font-size:14px">' + c + '</span>'; }).join('') +
+  '</div>';
+
+  html += '<h3 style="margin-bottom:12px">' + t('profile_language') + '</h3>';
+  html += '<div style="display:flex;gap:10px">' +
+    '<button style="padding:10px 24px;border-radius:12px;border:1.5px solid ' + (window.CURRENT_LANG === 'en' ? 'var(--primary)' : 'var(--border)') + ';background:' + (window.CURRENT_LANG === 'en' ? 'var(--primary)' : 'transparent') + ';color:' + (window.CURRENT_LANG === 'en' ? '#fff' : 'var(--text)') + ';cursor:pointer;font-size:14px;font-weight:600" onclick="switchLang(\'en\')">' + t('profile_lang_en') + '</button>' +
+    '<button style="padding:10px 24px;border-radius:12px;border:1.5px solid ' + (window.CURRENT_LANG === 'ru' ? 'var(--primary)' : 'var(--border)') + ';background:' + (window.CURRENT_LANG === 'ru' ? 'var(--primary)' : 'transparent') + ';color:' + (window.CURRENT_LANG === 'ru' ? '#fff' : 'var(--text)') + ';cursor:pointer;font-size:14px;font-weight:600" onclick="switchLang(\'ru\')">' + t('profile_lang_ru') + '</button>' +
+  '</div>';
+
+  html += '</div>';
   content.innerHTML = html;
 }
 
