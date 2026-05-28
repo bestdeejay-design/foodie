@@ -7,122 +7,152 @@
   <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'><path fill='%23e0523c' d='M8.1 13.34l2.83-2.83L3.91 3.5c-1.56 1.56-1.56 4.09 0 5.66l4.19 4.18zm6.78-1.81c1.53.71 3.68.21 5.27-1.38 1.91-1.91 2.28-4.65.81-6.12-1.46-1.46-4.2-1.1-6.12.81-1.59 1.59-2.09 3.74-1.38 5.27L3.7 19.87l1.41 1.41L12 14.41l6.88 6.88 1.41-1.41L13.41 13l1.47-1.47z'/></svg>" type="image/svg+xml">
   <link rel="stylesheet" href="css/app.css">
   <style>
-    :root { --sidebar-w: 260px; }
-
     body { overflow-x: hidden; }
 
-    /* Header */
     .web-header {
       position: sticky; top: 0; z-index: 100;
       background: var(--bg-dark); border-bottom: 1px solid var(--border);
-      padding: 12px 24px; display: flex; align-items: center; gap: 20px;
+      padding: 14px 32px; display: flex; align-items: center; gap: 24px;
+      backdrop-filter: blur(12px);
     }
-    .web-logo { font-size: 24px; font-weight:800; color: var(--primary); cursor: pointer; display: flex; align-items: center; gap: 8px; }
-    .web-logo svg { width: 28px; height: 28px; }
+    .web-logo { font-size: 26px; font-weight:800; color: var(--primary); cursor: pointer; display: flex; align-items: center; gap: 10px; }
+    .web-logo svg { width: 30px; height: 30px; }
 
     .web-search {
-      flex: 1; max-width: 480px; display: flex; align-items: center; gap: 10px;
-      background: var(--bg-card); border-radius: 12px; padding: 10px 16px;
+      flex: 1; max-width: 520px; display: flex; align-items: center; gap: 10px;
+      background: var(--bg-input); border: 1.5px solid var(--border);
+      border-radius: 14px; padding: 11px 18px; transition: border-color 0.2s;
     }
+    .web-search:focus-within { border-color: var(--primary); }
     .web-search svg { width: 20px; height: 20px; color: var(--text-muted); flex-shrink: 0; }
-    .web-search input {
-      background: none; border: none; color: var(--text); font-size: 15px; outline: none; width: 100%;
-    }
+    .web-search input { background: none; border: none; color: var(--text); font-size: 15px; outline: none; width: 100%; }
     .web-search input::placeholder { color: var(--text-muted); }
 
-    .web-header-actions { display: flex; align-items: center; gap: 8px; }
+    .web-header-actions { display: flex; align-items: center; gap: 12px; }
 
-    /* Category bar */
-    .web-categories {
-      position: sticky; top: 63px; z-index: 99;
-      background: var(--bg-dark); border-bottom: 1px solid var(--border);
-      padding: 10px 24px; display: flex; gap: 8px; overflow-x: auto;
+    .web-icon-btn {
+      width: 40px; height: 40px; border-radius: 12px; border: 1.5px solid var(--border);
+      background: var(--bg-card); color: var(--text-muted); cursor: pointer;
+      display: flex; align-items: center; justify-content: center; transition: all 0.2s;
     }
-    .web-category-chip {
-      flex-shrink: 0; padding: 8px 16px; border-radius: 20px; font-size: 13px; font-weight: 600;
-      background: var(--bg-card); color: var(--text-muted); border: none; cursor: pointer; white-space: nowrap;
+    .web-icon-btn:hover { border-color: var(--primary); color: var(--primary); background: var(--bg-card-hover); }
+    .web-icon-btn svg { width: 20px; height: 20px; }
+
+    .web-lang-btn {
+      padding: 8px 16px; border-radius: 10px; border: 1.5px solid var(--border);
+      background: var(--bg-card); color: var(--text-muted); cursor: pointer;
+      font-size: 13px; font-weight: 600; transition: all 0.2s;
+    }
+    .web-lang-btn:hover { border-color: var(--primary); color: var(--primary); }
+
+    /* Categories */
+    .web-categories {
+      position: sticky; top: 76px; z-index: 99;
+      background: var(--bg-dark); border-bottom: 1px solid var(--border);
+      padding: 12px 32px; display: flex; gap: 10px; overflow-x: auto;
+      backdrop-filter: blur(12px);
+    }
+    .web-cat-chip {
+      flex-shrink: 0; padding: 9px 18px; border-radius: 24px; font-size: 13px; font-weight: 600;
+      background: var(--bg-card); color: var(--text-muted); border: 1.5px solid transparent; cursor: pointer; white-space: nowrap;
       transition: all 0.2s;
     }
-    .web-category-chip:hover { background: var(--bg-light); }
-    .web-category-chip.active { background: var(--primary); color: #fff; }
+    .web-cat-chip:hover { border-color: var(--border); background: var(--bg-card-hover); }
+    .web-cat-chip.active { background: var(--primary); color: #fff; border-color: var(--primary); }
 
-    /* Main layout */
-    .web-main { display: flex; min-height: calc(100vh - 120px); }
-    .web-content { flex: 1; padding: 24px; max-width: 1200px; margin: 0 auto; }
-    .web-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(340px, 1fr)); gap: 20px; }
+    /* Grid */
+    .web-content { padding: 32px; max-width: 1440px; margin: 0 auto; }
+    .web-section-title { font-size: 22px; font-weight: 700; margin-bottom: 20px; }
+    .web-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(360px, 1fr)); gap: 24px; }
 
     /* Card */
     .web-card {
-      background: var(--bg-card); border-radius: 16px; overflow: hidden;
-      cursor: pointer; transition: all 0.25s;
+      background: var(--bg-card); border: 1px solid var(--border); border-radius: 20px;
+      overflow: hidden; cursor: pointer; transition: all 0.3s;
     }
-    .web-card:hover { transform: translateY(-4px); box-shadow: 0 8px 30px var(--shadow); }
-    .web-card-img {
-      height: 180px; background-size: cover; background-position: center; position: relative;
-    }
+    .web-card:hover { transform: translateY(-6px); box-shadow: 0 12px 40px var(--shadow); border-color: var(--primary); }
+    .web-card-img { height: 200px; background-size: cover; background-position: center; position: relative; }
     .web-card-fav {
-      position: absolute; top: 12px; right: 12px; width: 36px; height: 36px;
-      border-radius: 50%; background: rgba(0,0,0,0.5); border: none; cursor: pointer;
-      display: flex; align-items: center; justify-content: center; z-index: 1;
+      position: absolute; top: 14px; right: 14px; width: 40px; height: 40px;
+      border-radius: 12px; background: rgba(0,0,0,0.5); backdrop-filter: blur(8px);
+      border: none; cursor: pointer; display: flex; align-items: center; justify-content: center; z-index: 1;
+      transition: all 0.2s;
     }
-    .web-card-body { padding: 16px; }
-    .web-card-title { font-size: 17px; font-weight: 700; margin-bottom: 4px; }
-    .web-card-meta { display: flex; align-items: center; gap: 8px; font-size: 13px; margin-bottom: 8px; }
-    .web-card-meta .rating { display: flex; align-items: center; gap: 4px; color: var(--accent); font-weight: 700; }
-    .web-card-desc { font-size: 13px; color: var(--text-muted); line-height: 1.4; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
-    .web-card-tags { display: flex; gap: 4px; flex-wrap: wrap; margin-top: 10px; }
-    .web-card-tag { font-size: 11px; padding: 3px 10px; background: var(--bg-light); border-radius: 10px; color: var(--text-muted); }
+    .web-card-fav:hover { background: rgba(0,0,0,0.7); }
 
-    /* Detail page */
+    .web-card-body { padding: 20px; }
+    .web-card-title { font-size: 18px; font-weight: 700; margin-bottom: 8px; }
+    .web-card-meta { display: flex; align-items: center; gap: 10px; font-size: 14px; margin-bottom: 10px; flex-wrap: wrap; }
+    .web-card-meta .rating { display: flex; align-items: center; gap: 5px; color: var(--accent); font-weight: 700; font-size: 15px; }
+    .web-card-meta .price { font-weight: 700; color: var(--text-muted); }
+    .web-card-desc { font-size: 14px; color: var(--text-muted); line-height: 1.5; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
+    .web-card-tags { display: flex; gap: 6px; flex-wrap: wrap; margin-top: 14px; }
+    .web-card-tag { font-size: 12px; padding: 4px 12px; background: var(--bg-light); border-radius: 10px; color: var(--text-muted); }
+
+    /* Detail Page */
+    .web-center-col { max-width: 900px; margin: 0 auto; }
+    .web-back-btn { display: inline-flex; align-items: center; gap: 8px; color: var(--text-muted); cursor: pointer; font-size: 14px; font-weight: 600; margin-bottom: 20px; background: none; border: none; padding: 8px 16px; border-radius: 10px; transition: all 0.2s; }
+    .web-back-btn:hover { color: var(--primary); background: var(--bg-card); }
+
     .web-detail-hero {
-      height: 320px; background-size: cover; background-position: center; border-radius: 20px;
-      position: relative; margin-bottom: 24px; display: flex; align-items: flex-end; padding: 24px;
+      height: 380px; background-size: cover; background-position: center; border-radius: 24px;
+      position: relative; margin-bottom: 32px; display: flex; align-items: flex-end; padding: 32px;
     }
-    .web-detail-hero::after { content:''; position:absolute; bottom:0; left:0; right:0; height:60%; background:linear-gradient(transparent, rgba(0,0,0,0.7)); border-radius: 0 0 20px 20px; z-index:1; }
+    .web-detail-hero::after { content:''; position:absolute; bottom:0; left:0; right:0; height:55%; background:linear-gradient(transparent, rgba(0,0,0,0.75)); border-radius: 0 0 24px 24px; z-index:1; }
     .web-detail-hero-info { position: relative; z-index: 2; color: #fff; }
-    .web-detail-hero-info h1 { font-size: 36px; margin-bottom: 8px; }
+    .web-detail-hero-info h1 { font-size: 40px; margin-bottom: 10px; line-height: 1.1; }
+    .web-detail-hero-info .meta { display: flex; align-items: center; gap: 14px; font-size: 16px; opacity: 0.9; }
 
-    .web-detail-body { display: grid; grid-template-columns: 1fr 340px; gap: 32px; }
-    .web-detail-main h3 { font-size: 18px; margin-bottom: 12px; }
-    .web-detail-desc { font-size: 15px; line-height: 1.7; color: var(--text-muted); margin-bottom: 24px; }
+    .web-detail-grid { display: grid; grid-template-columns: 1fr 340px; gap: 40px; align-items: start; }
+    .web-detail-main h3 { font-size: 20px; margin-bottom: 14px; }
+    .web-detail-desc { font-size: 16px; line-height: 1.75; color: var(--text-muted); margin-bottom: 32px; }
 
-    .web-menu-item {
-      display: flex; justify-content: space-between; align-items: flex-start;
-      padding: 14px 0; border-bottom: 1px solid var(--border);
-    }
+    .web-menu-item { display: flex; justify-content: space-between; align-items: flex-start; padding: 16px 0; border-bottom: 1px solid var(--border); gap: 16px; }
     .web-menu-item:last-child { border-bottom: none; }
-    .web-menu-item h4 { margin: 0 0 4px; font-size: 15px; }
+    .web-menu-item h4 { margin: 0 0 4px; font-size: 16px; font-weight: 600; }
     .web-menu-item p { margin: 0; font-size: 13px; color: var(--text-muted); }
-    .web-menu-item .price { font-weight: 700; color: var(--success); font-size: 16px; margin-left: 16px; white-space: nowrap; }
+    .web-menu-item .price { font-weight: 700; color: var(--success); font-size: 17px; white-space: nowrap; }
 
-    .web-detail-sidebar { position: sticky; top: 130px; align-self: start; }
-    .web-sidebar-card { background: var(--bg-card); border-radius: 16px; padding: 20px; margin-bottom: 16px; }
-    .web-sidebar-card .info-row { display: flex; justify-content: space-between; padding: 10px 0; border-bottom: 1px solid var(--border); font-size: 14px; }
-    .web-sidebar-card .info-row:last-child { border-bottom: none; }
-    .web-sidebar-card .info-label { display: flex; align-items: center; gap: 6px; color: var(--text-muted); }
-    .web-sidebar-card .info-value { font-weight: 500; }
+    .web-sidebar { position: sticky; top: 156px; }
+    .web-info-card {
+      background: var(--bg-card); border: 1px solid var(--border); border-radius: 20px; padding: 24px; margin-bottom: 20px;
+    }
+    .web-info-row { display: flex; justify-content: space-between; align-items: flex-start; padding: 12px 0; border-bottom: 1px solid var(--border); font-size: 14px; gap: 12px; }
+    .web-info-row:last-child { border-bottom: none; }
+    .web-info-label { display: flex; align-items: center; gap: 8px; color: var(--text-muted); flex-shrink: 0; }
+    .web-info-value { font-weight: 500; text-align: right; }
 
     .web-book-btn {
-      width: 100%; padding: 16px; background: linear-gradient(135deg, var(--primary), var(--primary-light));
-      color: #fff; border: none; border-radius: 14px; font-size: 16px; font-weight: 700;
-      cursor: pointer; box-shadow: 0 4px 15px var(--glow); transition: all 0.2s;
-      display: flex; align-items: center; justify-content: center; gap: 8px;
+      width: 100%; padding: 18px; background: linear-gradient(135deg, var(--primary), var(--primary-light));
+      color: #fff; border: none; border-radius: 16px; font-size: 17px; font-weight: 700;
+      cursor: pointer; box-shadow: 0 4px 20px var(--glow); transition: all 0.25s;
+      display: flex; align-items: center; justify-content: center; gap: 10px;
     }
-    .web-book-btn:hover { transform: translateY(-1px); box-shadow: 0 6px 24px var(--glow); }
+    .web-book-btn:hover { transform: translateY(-2px); box-shadow: 0 8px 28px var(--glow); }
 
-    .web-back { display: inline-flex; align-items: center; gap: 8px; color: var(--text-muted); cursor: pointer; font-size: 14px; margin-bottom: 16px; border:none;background:none; }
-    .web-back:hover { color: var(--primary); }
+    .web-empty { text-align: center; padding: 80px 20px; }
 
-    .web-empty { text-align: center; padding: 60px 20px; color: var(--text-muted); }
+    /* Booking form */
+    .web-form-group { margin-bottom: 16px; }
+    .web-form-group label { display: block; font-size: 13px; color: var(--text-muted); margin-bottom: 6px; font-weight: 600; }
+    .web-form-group input, .web-form-group select {
+      width: 100%; padding: 14px 16px; background: var(--bg-input); border: 1.5px solid var(--border);
+      border-radius: 12px; color: var(--text); font-size: 15px; outline: none; transition: border-color 0.2s;
+    }
+    .web-form-group input:focus, .web-form-group select:focus { border-color: var(--primary); }
+
+    .web-success { text-align: center; padding: 80px 20px; }
 
     @media (max-width: 900px) {
-      .web-header { padding: 10px 16px; }
+      .web-header { padding: 10px 16px; gap: 12px; }
       .web-search { max-width: none; }
-      .web-detail-body { grid-template-columns: 1fr; }
-      .web-detail-hero { height: 220px; }
+      .web-categories { padding: 10px 16px; }
+      .web-content { padding: 16px; }
+      .web-detail-grid { grid-template-columns: 1fr; }
+      .web-detail-hero { height: 240px; padding: 20px; }
       .web-detail-hero-info h1 { font-size: 28px; }
       .web-grid { grid-template-columns: 1fr; }
-      .web-content { padding: 16px; }
+      .web-sidebar { position: static; }
     }
   </style>
 </head>
@@ -141,37 +171,31 @@
       <symbol id="icon-sun" viewBox="0 0 24 24"><path fill="currentColor" d="M12 7c-2.76 0-5 2.24-5 5s2.24 5 5 5 5-2.24 5-5-2.24-5-5-5zM2 13h2c.55 0 1-.45 1-1s-.45-1-1-1H2c-.55 0-1 .45-1 1s.45 1 1 1zm18 0h2c.55 0 1-.45 1-1s-.45-1-1-1h-2c-.55 0-1 .45-1 1s.45 1 1 1zM11 2v2c0 .55.45 1 1 1s1-.45 1-1V2c0-.55-.45-1-1-1s-1 .45-1 1zm0 18v2c0 .55.45 1 1 1s1-.45 1-1v-2c0-.55-.45-1-1-1s-1 .45-1 1zM5.99 4.58c-.39-.39-1.03-.39-1.41 0-.39.39-.39 1.03 0 1.41l1.06 1.06c.39.39 1.03.39 1.41 0s.39-1.03 0-1.41L5.99 4.58zm12.37 12.37c-.39-.39-1.03-.39-1.41 0-.39.39-.39 1.03 0 1.41l1.06 1.06c.39.39 1.03.39 1.41 0 .39-.39.39-1.03 0-1.41l-1.06-1.06zm1.06-10.96c.39-.39.39-1.03 0-1.41-.39-.39-1.03-.39-1.41 0l-1.06 1.06c-.39.39-.39 1.03 0 1.41s1.03.39 1.41 0l1.06-1.06zM7.05 18.36c.39-.39.39-1.03 0-1.41-.39-.39-1.03-.39-1.41 0l-1.06 1.06c-.39.39-.39 1.03 0 1.41s1.03.39 1.41 0l1.06-1.06z"/></symbol>
       <symbol id="icon-moon" viewBox="0 0 24 24"><path fill="currentColor" d="M12 3c-4.97 0-9 4.03-9 9s4.03 9 9 9 9-4.03 9-9c0-.46-.04-.92-.1-1.36-.98 1.37-2.58 2.26-4.4 2.26-2.98 0-5.4-2.42-5.4-5.4 0-1.81.89-3.42 2.26-4.44-.44-.07-.9-.1-1.36-.1z"/></symbol>
       <symbol id="icon-check" viewBox="0 0 24 24"><path fill="currentColor" d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></symbol>
+      <symbol id="icon-globe" viewBox="0 0 24 24"><path fill="currentColor" d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 17.93c-3.95-.49-7-3.85-7-7.93 0-.62.08-1.21.21-1.79L9 15v1c0 1.1.9 2 2 2v1.93zm6.9-2.54c-.26-.81-1-1.39-1.9-1.39h-1v-3c0-.55-.45-1-1-1H8v-2h2c.55 0 1-.45 1-1V7h2c1.1 0 2-.9 2-2v-.41c2.93 1.19 5 4.06 5 7.41 0 2.08-.8 3.97-2.1 5.39z"/></symbol>
     </defs>
   </svg>
 
-  <div id="app">
-    <!-- Header -->
-    <header class="web-header">
-      <div class="web-logo" onclick="showHome()">
-        <svg><use href="#icon-home"/></svg> Foodie
-      </div>
-      <div class="web-search">
-        <svg><use href="#icon-search"/></svg>
-        <input type="text" id="searchInput" placeholder="Search restaurants, cuisines..." oninput="handleSearch(this.value)">
-      </div>
-      <div class="web-header-actions">
-        <button class="web-category-chip" style="font-size:12px;cursor:pointer" onclick="var l=window.CURRENT_LANG==='en'?'ru':'en';switchLang(l)" title="Switch language">
-          Lang: EN/RU
-        </button>
-        <button class="web-category-chip" style="font-size:12px;width:36px;height:36px;padding:0;border-radius:50%;display:flex;align-items:center;justify-content:center;cursor:pointer" onclick="toggleTheme()" title="Toggle theme" id="themeBtn">
-          <svg style="width:18px;height:18px"><use href="#icon-sun"/></svg>
-        </button>
-      </div>
-    </header>
-
-    <!-- Category Bar -->
-    <div class="web-categories" id="categoryBar"></div>
-
-    <!-- Main Content -->
-    <div class="web-main">
-      <div class="web-content" id="mainContent"></div>
+  <header class="web-header">
+    <div class="web-logo" onclick="navigateTo('/')">
+      <svg><use href="#icon-home"/></svg> Foodie
     </div>
-  </div>
+    <div class="web-search">
+      <svg><use href="#icon-search"/></svg>
+      <input type="text" id="searchInput" placeholder="Search restaurants, cuisines...">
+    </div>
+    <div class="web-header-actions">
+      <button class="web-lang-btn" onclick="switchLang(window.CURRENT_LANG==='en'?'ru':'en')">
+        <svg style="width:16px;height:16px;vertical-align:middle;margin-right:4px"><use href="#icon-globe"/></svg>
+        <span id="langLabel">EN</span>
+      </button>
+      <button class="web-icon-btn" onclick="toggleThemeWeb()" title="Toggle theme" id="themeBtn">
+        <svg id="themeIcon"><use href="#icon-sun"/></svg>
+      </button>
+    </div>
+  </header>
+
+  <div class="web-categories" id="categoryBar"></div>
+  <div class="web-content" id="mainContent"></div>
 
   <script src="js/locales.js"></script>
   <script src="js/data.js"></script>
