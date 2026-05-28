@@ -30,6 +30,12 @@
     .web-exit-btn { display:flex;align-items:center;gap:6px;padding:6px 16px;background:none;border:1.5px solid var(--border);border-radius:10px;color:var(--text-muted);cursor:pointer;font-size:13px;font-weight:600;transition:all 0.2s; }
     .web-exit-btn:hover { border-color:var(--primary);color:var(--primary); }
 
+    .web-cart-btn { position:relative;width:40px;height:40px;border-radius:12px;border:1.5px solid var(--border);background:var(--bg-card);color:var(--text-muted);cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all 0.2s; }
+    .web-cart-btn:hover { border-color:var(--primary);color:var(--primary); }
+    .web-cart-btn svg { width:20px;height:20px; }
+    .web-cart-badge { position:absolute;top:-6px;right:-6px;background:var(--primary);color:#fff;font-size:10px;font-weight:700;min-width:18px;height:18px;border-radius:9px;display:flex;align-items:center;justify-content:center;padding:0 4px; }
+    .web-cart-badge:empty { display:none; }
+
     .web-cuisine-section { margin-bottom:40px; }
     .web-cuisine-scroll {
       display:flex; gap:20px; overflow-x:auto; padding:8px 4px 12px;
@@ -341,6 +347,10 @@
         </button>
         <button class="web-icon-btn" onclick="toggleTheme()" title="Toggle theme" id="webThemeBtn">
           <svg id="webThemeIcon"><use href="#icon-sun"/></svg>
+        </button>
+        <button class="web-cart-btn" onclick="showCart()" title="Cart">
+          <svg><use href="#icon-home"/></svg>
+          <span class="web-cart-badge" id="webCartBadge"></span>
         </button>
         <button class="web-exit-btn" onclick="closeWebApp()">
           <svg style="width:16px;height:16px"><use href="#icon-arrow-left"/></svg> Exit

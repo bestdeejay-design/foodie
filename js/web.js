@@ -26,6 +26,8 @@ function switchLang(lang) {
     var q = this.value;
     searchTimer = setTimeout(function() { handleSearch(q); }, 300);
   });
+
+  updateCartBadge();
 })();
 
 function navigateTo(path) {
@@ -145,6 +147,7 @@ function renderCard(r) {
       '<button class="web-card-fav" style="color:' + (isFav ? 'var(--primary)' : '#fff') + '" onclick="event.stopPropagation();toggleFav(' + r.id + ', this)">' +
         '<svg style="width:20px;height:20px"><use href="#icon-heart"/></svg>' +
       '</button>' +
+      (hasDelivery(r.id) ? '<span style="position:absolute;bottom:14px;left:14px;background:var(--success);color:#fff;font-size:11px;font-weight:700;padding:4px 10px;border-radius:8px;z-index:1">Delivery</span>' : '') +
     '</div>' +
     '<div class="web-card-body">' +
       '<div class="web-card-title">' + name + '</div>' +
@@ -249,7 +252,10 @@ function showRestaurant(id) {
           '<h4>' + loc(item.name, item.nameRu) + '</h4>' +
           '<p>' + item.description + '</p>' +
         '</div>' +
-        '<span class="price">$' + item.price + '</span>' +
+        '<div style="display:flex;align-items:center;gap:12px">' +
+          '<span class="price">$' + item.price + '</span>' +
+          '<button onclick="event.stopPropagation();addToCart(appData.restaurants[' + (r.id - 1) + '],' + JSON.stringify({name:item.name,nameRu:item.nameRu,price:item.price}).replace(/"/g, '&quot;') + ')" style="width:32px;height:32px;border-radius:10px;border:1.5px solid var(--border);background:var(--bg-card);color:var(--primary);cursor:pointer;font-size:18px;font-weight:700;display:flex;align-items:center;justify-content:center;transition:all 0.2s;flex-shrink:0" onmouseover="this.style.background=\'var(--primary)\';this.style.color=\'#fff\';this.style.borderColor=\'var(--primary)\'" onmouseout="this.style.background=\'\';this.style.color=\'var(--primary)\'">+</button>' +
+        '</div>' +
       '</div>';
     });
     html += '</div>';
@@ -262,12 +268,23 @@ function showRestaurant(id) {
   html += '<div class="web-info-card">' +
     '<div class="web-info-row"><span class="web-info-label"><svg style="width:16px;height:16px"><use href="#icon-location"/></svg> ' + (window.CURRENT_LANG === 'ru' ? 'Адрес' : 'Address') + '</span><span class="web-info-value">' + r.address + '</span></div>' +
     '<div class="web-info-row"><span class="web-info-label"><svg style="width:16px;height:16px"><use href="#icon-clock"/></svg> ' + (window.CURRENT_LANG === 'ru' ? 'Часы' : 'Hours') + '</span><span class="web-info-value">' + r.hours + '</span></div>' +
-    '<div class="web-info-row"><span class="web-info-label"><svg style="width:16px;height:16px"><use href="#icon-phone"/></svg> ' + (window.CURRENT_LANG === 'ru' ? 'Телефон' : 'Phone') + '</span><span class="web-info-value">' + r.phone + '</span></div>' +
-  '</div>';
+    '<div class="web-info-row"><span class="web-info-label"><svg style="width:16px;height:16px"><use href="#icon-phone"/></svg> ' + (window.CURRENT_LANG === 'ru' ? 'Телефон' : 'Phone') + '</span><span class="web-info-value">' + r.phone + '</span></div>';
+
+  if (hasDelivery(r.id)) {
+    var del = getDelivery(r.id);
+    html += '<div class="web-info-row"><span class="web-info-label"><svg style="width:16px;height:16px"><use href="#icon-check"/></svg> Delivery</span><span class="web-info-value" style="color:var(--success)">$' + del.fee.toFixed(2) + ' &bull; ' + del.time + ' min</span></div>';
+  }
+  html += '</div>';
 
   html += '<button class="web-book-btn" onclick="showBookingForm(' + r.id + ')">' +
     '<svg style="width:22px;height:22px"><use href="#icon-check"/></svg> ' + t('restaurant_book_table') +
   '</button>';
+
+  if (hasDelivery(r.id)) {
+    html += '<button class="web-book-btn" style="background:linear-gradient(135deg, var(--success), #1abc9c);margin-top:12px" onclick="showCart()">' +
+      '<svg style="width:22px;height:22px"><use href="#icon-check"/></svg> Order Delivery' +
+    '</button>';
+  }
 
   html += '</div>'; // end sidebar
   html += '</div>'; // end grid
@@ -362,4 +379,135 @@ function confirmWebBooking(restaurantId) {
   html += '</div>';
 
   document.getElementById('webContent').innerHTML = html;
+}
+
+// ===== CART & DELIVERY =====
+function hasDelivery(restaurantId) {
+  return !!appData.delivery[restaurantId];
+}
+
+function getDelivery(restaurantId) {
+  return appData.delivery[restaurantId] || { fee: 0, time: '—' };
+}
+
+function addToCart(restaurant, item) {
+  var existing = -1;
+  for (var i = 0; i < appData.cart.length; i++) {
+    if (appData.cart[i].restaurantId === restaurant.id && appData.cart[i].name === item.name) {
+      existing = i; break;
+    }
+  }
+  if (existing > -1) {
+    appData.cart[existing].qty++;
+  } else {
+    appData.cart.push({
+      restaurantId: restaurant.id,
+      restaurantName: restaurant.name,
+      name: item.name,
+      nameRu: item.nameRu,
+      price: item.price,
+      qty: 1
+    });
+  }
+  updateCartBadge();
+}
+
+function updateCartBadge() {
+  var badge = document.getElementById('webCartBadge');
+  if (!badge) return;
+  var count = appData.cart.reduce(function(s, i) { return s + i.qty; }, 0);
+  badge.textContent = count > 0 ? count : '';
+}
+
+function showCart() {
+  var content = document.getElementById('webContent');
+  var cart = appData.cart;
+  var subtotal = cart.reduce(function(s, i) { return s + i.price * i.qty; }, 0);
+  var restaurantId = cart.length > 0 ? cart[0].restaurantId : null;
+  var del = restaurantId ? getDelivery(restaurantId) : { fee: 0, time: '—' };
+  var fee = cart.length > 0 ? del.fee : 0;
+  var total = subtotal + fee;
+
+  var html = '<div class="web-center-col">';
+  html += '<button class="web-back-btn" onclick="showHome()"><svg style="width:18px;height:18px"><use href="#icon-arrow-left"/></svg> ' + t('landing_exit') + '</button>';
+
+  if (cart.length === 0) {
+    html += '<div class="web-empty"><p style="color:var(--text-muted);font-size:18px">Cart is empty</p></div>';
+  } else {
+    html += '<h2>Your Order</h2>';
+    html += '<p style="color:var(--text-muted);margin-bottom:24px">from <strong>' + cart[0].restaurantName + '</strong></p>';
+
+    html += '<div class="web-info-card">';
+    cart.forEach(function(item, i) {
+      html += '<div class="web-menu-item">' +
+        '<div style="flex:1">' +
+          '<h4>' + loc(item.name, item.nameRu) + '</h4>' +
+          '<div style="display:flex;align-items:center;gap:8px;margin-top:4px">' +
+            '<button onclick="changeCartQty(' + i + ',-1)" style="width:28px;height:28px;border-radius:8px;border:1px solid var(--border);background:var(--bg-card);color:var(--text);cursor:pointer;font-size:16px;line-height:1">&minus;</button>' +
+            '<span style="font-weight:600;min-width:20px;text-align:center">' + item.qty + '</span>' +
+            '<button onclick="changeCartQty(' + i + ',1)" style="width:28px;height:28px;border-radius:8px;border:1px solid var(--border);background:var(--bg-card);color:var(--text);cursor:pointer;font-size:16px;line-height:1">+</button>' +
+          '</div>' +
+        '</div>' +
+        '<span class="price">$' + (item.price * item.qty).toFixed(2) + '</span>' +
+      '</div>';
+    });
+    html += '</div>';
+
+    html += '<div class="web-info-card" style="margin-top:16px">';
+    html += '<div class="web-info-row"><span>Subtotal</span><span class="web-info-value">$' + subtotal.toFixed(2) + '</span></div>';
+    html += '<div class="web-info-row"><span>Delivery</span><span class="web-info-value">$' + fee.toFixed(2) + '</span></div>';
+    html += '<div class="web-info-row" style="border-bottom:none"><strong>Total</strong><strong style="color:var(--primary);font-size:18px">$' + total.toFixed(2) + '</strong></div>';
+    html += '</div>';
+
+    html += '<div class="web-info-card" style="margin-top:16px">';
+    html += '<div class="web-form-group"><label>Delivery Address</label><input type="text" id="delAddress" value="' + (appData.profile.address || '') + '"></div>';
+    html += '<p style="font-size:12px;color:var(--text-muted);margin-bottom:16px"><svg style="width:14px;height:14px;vertical-align:middle;margin-right:4px"><use href="#icon-clock"/></svg> Estimated delivery: ' + del.time + ' min</p>';
+    html += '<button class="web-book-btn" onclick="placeOrder()">Place Order &bull; $' + total.toFixed(2) + '</button>';
+    html += '</div>';
+  }
+
+  html += '</div>';
+  content.innerHTML = html;
+}
+
+function changeCartQty(index, delta) {
+  appData.cart[index].qty += delta;
+  if (appData.cart[index].qty <= 0) appData.cart.splice(index, 1);
+  updateCartBadge();
+  showCart();
+}
+
+function placeOrder() {
+  var address = document.getElementById('delAddress').value;
+  var cart = appData.cart;
+  if (cart.length === 0) return;
+
+  var subtotal = cart.reduce(function(s, i) { return s + i.price * i.qty; }, 0);
+  var del = getDelivery(cart[0].restaurantId);
+  var total = subtotal + del.fee;
+
+  appData.orders.push({
+    id: Date.now(),
+    restaurantName: cart[0].restaurantName,
+    items: cart.slice(),
+    subtotal: subtotal,
+    deliveryFee: del.fee,
+    total: total,
+    address: address,
+    status: 'confirmed',
+    time: new Date().toLocaleString()
+  });
+
+  appData.cart = [];
+  updateCartBadge();
+
+  var content = document.getElementById('webContent');
+  content.innerHTML = '<div class="web-center-col web-success">' +
+    '<svg style="width:80px;height:80px;color:var(--success);margin-bottom:20px"><use href="#icon-check"/></svg>' +
+    '<h2 style="margin-bottom:12px">Order Placed!</h2>' +
+    '<p style="color:var(--text-muted);font-size:16px;margin-bottom:8px">' + cart[0].restaurantName + '</p>' +
+    '<p style="color:var(--text-muted);font-size:15px;margin-bottom:4px">$' + total.toFixed(2) + ' &bull; Delivery: ' + del.time + ' min</p>' +
+    '<p style="color:var(--text-muted);font-size:14px;margin-bottom:24px">' + address + '</p>' +
+    '<button class="web-back-btn" onclick="navigateTo(\'/\')" style="font-size:15px;padding:12px 24px;border:1.5px solid var(--border)">' + t('landing_exit') + '</button>' +
+  '</div>';
 }

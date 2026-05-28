@@ -6,6 +6,7 @@ const appData = {
     email: 'alex@email.com',
     phone: '+1 (555) 987-6543',
     avatar: 'AJ',
+    address: '42 Oak Street, Apt 3B',
     dietary: ['Vegetarian friendly', 'No allergies'],
     favoriteCuisines: ['Italian', 'Japanese', 'Mexican']
   },
@@ -1101,5 +1102,36 @@ const appData = {
       unread: 0,
       icon: '💬'
     }
-  ]
+  ],
+
+  delivery: {
+    1: { fee: 3.99, time: '25-35' },
+    2: { fee: 5.99, time: '30-45' },
+    3: { fee: 2.99, time: '20-30' },
+    6: { fee: 3.49, time: '25-35' },
+    7: { fee: 1.99, time: '15-25' },
+    8: { fee: 3.99, time: '25-35' },
+    10: { fee: 3.49, time: '20-30' },
+    12: { fee: 2.99, time: '25-40' },
+    13: { fee: 3.99, time: '20-30' },
+    14: { fee: 2.49, time: '15-25' },
+    15: { fee: 3.99, time: '20-30' },
+    16: { fee: 2.99, time: '15-25' },
+    18: { fee: 1.99, time: '15-25' },
+    19: { fee: 3.99, time: '25-35' },
+    20: { fee: 2.49, time: '15-25' },
+    21: { fee: 2.99, time: '15-25' },
+    25: { fee: 2.99, time: '15-25' },
+    28: { fee: 3.49, time: '25-35' },
+    29: { fee: 2.99, time: '20-30' },
+    31: { fee: 2.49, time: '15-25' },
+    32: { fee: 2.99, time: '20-30' },
+    33: { fee: 4.99, time: '30-40' },
+    34: { fee: 3.49, time: '25-40' },
+    35: { fee: 2.99, time: '25-40' },
+    36: { fee: 2.49, time: '15-25' }
+  },
+
+  cart: [],
+  orders: []
 };
