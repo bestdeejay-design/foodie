@@ -30,14 +30,24 @@
     .web-exit-btn { display:flex;align-items:center;gap:6px;padding:6px 16px;background:none;border:1.5px solid var(--border);border-radius:10px;color:var(--text-muted);cursor:pointer;font-size:13px;font-weight:600;transition:all 0.2s; }
     .web-exit-btn:hover { border-color:var(--primary);color:var(--primary); }
 
-    .web-cuisine-section { margin-bottom:36px; }
-    .web-cuisine-grid { display:grid;grid-template-columns:repeat(6,1fr);gap:12px; }
-    .web-cuisine-card { background:var(--bg-card);border:2px solid var(--border);border-radius:16px;padding:18px 12px;text-align:center;cursor:pointer;transition:all 0.25s; }
-    .web-cuisine-card:hover { border-color:var(--primary);transform:translateY(-3px);box-shadow:0 8px 24px var(--shadow); }
-    .web-cuisine-card.active { border-color:var(--primary);background:rgba(224,82,60,0.08); }
-    .web-cuisine-card .cuisine-icon { font-size:30px;margin-bottom:6px;display:block;line-height:1; }
-    .web-cuisine-card .cuisine-name { font-size:12px;font-weight:600; }
-    .web-cuisine-card .cuisine-count { font-size:11px;color:var(--text-muted);margin-top:2px; }
+    .web-cuisine-section { margin-bottom:40px; }
+    .web-cuisine-grid { display:grid;grid-template-columns:repeat(4,1fr);gap:16px; }
+    .web-cuisine-card {
+      background:var(--bg-card);border:1px solid var(--border);border-radius:20px;
+      padding:32px 16px 22px;text-align:center;cursor:pointer;transition:all 0.3s;
+      position:relative;overflow:hidden;
+    }
+    .web-cuisine-card::before {
+      content:'';position:absolute;top:0;left:0;right:0;height:4px;
+      border-radius:20px 20px 0 0;background:var(--card-color,var(--primary));opacity:0.5;transition:all 0.3s;
+    }
+    .web-cuisine-card:hover { transform:translateY(-6px);box-shadow:0 14px 36px var(--shadow); }
+    .web-cuisine-card:hover::before { height:100%;opacity:0.07; }
+    .web-cuisine-card.active { border-color:var(--primary); }
+    .web-cuisine-card.active::before { opacity:1;height:4px; }
+    .web-cuisine-card .cuisine-icon { font-size:42px;margin-bottom:12px;display:block;line-height:1;position:relative;z-index:1; }
+    .web-cuisine-card .cuisine-name { font-size:15px;font-weight:700;position:relative;z-index:1; }
+    .web-cuisine-card .cuisine-count { font-size:12px;color:var(--text-muted);margin-top:4px;position:relative;z-index:1; }
 
     .web-content { padding:32px;max-width:1440px;margin:0 auto; }
     .web-section-title { font-size:22px;font-weight:700;margin-bottom:20px; }
@@ -99,7 +109,7 @@
     @media (max-width:900px) {
       .web-header { padding:10px 16px;gap:12px; }
       .web-search { max-width:none; }
-      .web-cuisine-grid { grid-template-columns:repeat(3,1fr); }
+      .web-cuisine-grid { grid-template-columns:repeat(2,1fr); }
       .web-content { padding:16px; }
       .web-detail-grid { grid-template-columns:1fr; }
       .web-detail-hero { height:240px;padding:20px; }

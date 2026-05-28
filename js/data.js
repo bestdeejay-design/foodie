@@ -11,18 +11,18 @@ const appData = {
   },
 
   categories: [
-    { id: 'italian', name: 'Italian', icon: '🍝' },
-    { id: 'japanese', name: 'Japanese', icon: '🍣' },
-    { id: 'mexican', name: 'Mexican', icon: '🌮' },
-    { id: 'chinese', name: 'Chinese', icon: '🥡' },
-    { id: 'french', name: 'French', icon: '🥐' },
-    { id: 'american', name: 'American', icon: '🍔' },
-    { id: 'cafe', name: 'Cafes', icon: '☕' },
-    { id: 'seafood', name: 'Seafood', icon: '🦞' },
-    { id: 'indian', name: 'Indian', icon: '🍛' },
-    { id: 'mediterranean', name: 'Mediterranean', icon: '🫒' },
-    { id: 'thai', name: 'Thai', icon: '🍜' },
-    { id: 'bbq', name: 'BBQ & Grill', icon: '🥩' }
+    { id: 'italian', name: 'Italian', icon: '🍝', color: '#E74C3C' },
+    { id: 'japanese', name: 'Japanese', icon: '🍣', color: '#E67E22' },
+    { id: 'mexican', name: 'Mexican', icon: '🌮', color: '#2ECC71' },
+    { id: 'chinese', name: 'Chinese', icon: '🥡', color: '#E91E63' },
+    { id: 'french', name: 'French', icon: '🥐', color: '#3498DB' },
+    { id: 'american', name: 'American', icon: '🍔', color: '#F39C12' },
+    { id: 'cafe', name: 'Cafes', icon: '☕', color: '#8B4513' },
+    { id: 'seafood', name: 'Seafood', icon: '🦞', color: '#1ABC9C' },
+    { id: 'indian', name: 'Indian', icon: '🍛', color: '#F1C40F' },
+    { id: 'mediterranean', name: 'Mediterranean', icon: '🫒', color: '#2C3E50' },
+    { id: 'thai', name: 'Thai', icon: '🍜', color: '#9B59B6' },
+    { id: 'bbq', name: 'BBQ & Grill', icon: '🥩', color: '#C0392B' }
   ],
 
   restaurants: [

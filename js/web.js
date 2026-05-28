@@ -70,14 +70,15 @@ function showGrid() {
   html += '<div class="web-cuisine-section">';
   html += '<h2 class="web-section-title">' + t('home_categories') + '</h2>';
   html += '<div class="web-cuisine-grid">';
-  html += '<div class="web-cuisine-card' + (selectedCategory === 'all' ? ' active' : '') + '" onclick="selectCategory(\'all\')">' +
+  html += '<div class="web-cuisine-card' + (selectedCategory === 'all' ? ' active' : '') + '" style="--card-color:var(--primary)" onclick="selectCategory(\'all\')">' +
     '<span class="cuisine-icon">🍽️</span>' +
     '<div class="cuisine-name">' + t('nav_home') + '</div>' +
     '<div class="cuisine-count">' + appData.restaurants.length + ' ' + t('home_places') + '</div>' +
   '</div>';
   appData.categories.forEach(function(c) {
     var count = appData.restaurants.filter(function(r) { return r.cuisine === c.id; }).length;
-    html += '<div class="web-cuisine-card' + (selectedCategory === c.id ? ' active' : '') + '" onclick="selectCategory(\'' + c.id + '\')">' +
+    var accent = c.color || 'var(--primary)';
+    html += '<div class="web-cuisine-card' + (selectedCategory === c.id ? ' active' : '') + '" style="--card-color:' + accent + '" onclick="selectCategory(\'' + c.id + '\')">' +
       '<span class="cuisine-icon">' + c.icon + '</span>' +
       '<div class="cuisine-name">' + c.name + '</div>' +
       '<div class="cuisine-count">' + count + ' ' + t('home_places') + '</div>' +
