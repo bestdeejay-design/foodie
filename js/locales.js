@@ -269,6 +269,11 @@ window.LOCALES = {
 })();
 
 function t(key) {
-  const locale = window.LOCALES && window.LOCALES[window.CURRENT_LANG];
-  return (locale && locale[key]) || (window.LOCALES?.en?.[key]) || key;
+  var locale = window.LOCALES && window.LOCALES[window.CURRENT_LANG];
+  return (locale && locale[key]) || (window.LOCALES && window.LOCALES['en'] && window.LOCALES['en'][key]) || key;
+}
+
+function loc(fieldEn, fieldRu) {
+  if (window.CURRENT_LANG === 'ru' && fieldRu !== undefined && fieldRu !== '') return fieldRu;
+  return fieldEn;
 }
