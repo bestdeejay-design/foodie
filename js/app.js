@@ -101,7 +101,7 @@ function goBack() {
     pageNav.pop();
     const prevPage = pageNav[pageNav.length - 1];
 
-    const navPages = ['home', 'explore', 'favorites', 'bookings', 'orders', 'chat'];
+    const navPages = ['home', 'explore', 'favorites', 'bookings', 'orders'];
     if (navPages.includes(prevPage)) {
       document.querySelectorAll('.nav-item').forEach(btn => btn.classList.remove('active'));
       const navBtns = document.querySelectorAll('.nav-item');

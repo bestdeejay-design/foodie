@@ -30,6 +30,29 @@ function switchLang(lang) {
   updateCartBadge();
 })();
 
+function showWebChat() {
+  var content = document.getElementById('webContent');
+  var html = '<div class="web-center-col">';
+  html += '<button class="web-back-btn" onclick="showHome()"><svg style="width:18px;height:18px"><use href="#icon-arrow-left"/></svg> ' + t('landing_exit') + '</button>';
+  html += '<h2>' + t('chat_title') + '</h2>';
+  html += '<div style="display:flex;flex-direction:column;gap:12px;margin-top:20px">';
+  appData.chats.forEach(function(c) {
+    html += '<div class="web-info-card" style="padding:16px;display:flex;align-items:center;gap:16px;cursor:pointer">' +
+      '<div style="width:48px;height:48px;border-radius:50%;background:var(--bg-light);display:flex;align-items:center;justify-content:center;font-size:22px;flex-shrink:0">' + c.icon + '</div>' +
+      '<div style="flex:1;min-width:0">' +
+        '<div style="font-weight:600;font-size:15px;margin-bottom:2px">' + c.name + '</div>' +
+        '<div style="font-size:13px;color:var(--text-muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis">' + c.lastMsg + '</div>' +
+      '</div>' +
+      '<div style="display:flex;flex-direction:column;align-items:flex-end;gap:4px;flex-shrink:0">' +
+        '<span style="font-size:12px;color:var(--text-muted)">' + c.time + '</span>' +
+        (c.unread > 0 ? '<span style="background:var(--primary);color:#fff;font-size:10px;min-width:18px;height:18px;border-radius:9px;display:flex;align-items:center;justify-content:center;padding:0 5px;font-weight:600">' + c.unread + '</span>' : '') +
+      '</div>' +
+    '</div>';
+  });
+  html += '</div></div>';
+  content.innerHTML = html;
+}
+
 function navigateTo(path) {
   try {
     if (path === '/' || path === '') {
