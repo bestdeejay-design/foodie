@@ -45,20 +45,18 @@
     }
     .web-lang-btn:hover { border-color: var(--primary); color: var(--primary); }
 
-    /* Categories */
-    .web-categories {
-      position: sticky; top: 76px; z-index: 99;
-      background: var(--bg-dark); border-bottom: 1px solid var(--border);
-      padding: 12px 32px; display: flex; gap: 10px; overflow-x: auto;
-      backdrop-filter: blur(12px);
+    /* Cuisine Grid */
+    .web-cuisine-section { margin-bottom: 36px; }
+    .web-cuisine-grid { display: grid; grid-template-columns: repeat(6, 1fr); gap: 12px; }
+    .web-cuisine-card {
+      background: var(--bg-card); border: 2px solid var(--border); border-radius: 16px;
+      padding: 18px 12px; text-align: center; cursor: pointer; transition: all 0.25s;
     }
-    .web-cat-chip {
-      flex-shrink: 0; padding: 9px 18px; border-radius: 24px; font-size: 13px; font-weight: 600;
-      background: var(--bg-card); color: var(--text-muted); border: 1.5px solid transparent; cursor: pointer; white-space: nowrap;
-      transition: all 0.2s;
-    }
-    .web-cat-chip:hover { border-color: var(--border); background: var(--bg-card-hover); }
-    .web-cat-chip.active { background: var(--primary); color: #fff; border-color: var(--primary); }
+    .web-cuisine-card:hover { border-color: var(--primary); transform: translateY(-3px); box-shadow: 0 8px 24px var(--shadow); }
+    .web-cuisine-card.active { border-color: var(--primary); background: rgba(224,82,60,0.08); }
+    .web-cuisine-card .cuisine-icon { font-size: 30px; margin-bottom: 6px; display: block; line-height: 1; }
+    .web-cuisine-card .cuisine-name { font-size: 12px; font-weight: 600; }
+    .web-cuisine-card .cuisine-count { font-size: 11px; color: var(--text-muted); margin-top: 2px; }
 
     /* Grid */
     .web-content { padding: 32px; max-width: 1440px; margin: 0 auto; }
@@ -146,7 +144,7 @@
     @media (max-width: 900px) {
       .web-header { padding: 10px 16px; gap: 12px; }
       .web-search { max-width: none; }
-      .web-categories { padding: 10px 16px; }
+      .web-cuisine-grid { grid-template-columns: repeat(3, 1fr); }
       .web-content { padding: 16px; }
       .web-detail-grid { grid-template-columns: 1fr; }
       .web-detail-hero { height: 240px; padding: 20px; }
@@ -194,7 +192,6 @@
     </div>
   </header>
 
-  <div class="web-categories" id="categoryBar"></div>
   <div class="web-content" id="mainContent"></div>
 
   <script src="js/locales.js"></script>

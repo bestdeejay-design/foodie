@@ -25,7 +25,6 @@ function switchLang(lang) {
   localStorage.setItem('foodie-lang', lang);
   document.getElementById('langLabel').textContent = lang.toUpperCase();
   updateThemeIcon();
-  renderCategoryBar();
   if (currentView === 'restaurant' && currentRestaurant) showRestaurant(currentRestaurant);
   else showHome();
 }
@@ -48,11 +47,12 @@ function switchLang(lang) {
   navigateTo(window.location.hash ? window.location.hash.slice(1) : '/');
 })();
 
+function renderCategoryBar() { /* unused - cuisines are in showGrid */ }
+
 function navigateTo(path) {
   try {
     if (path === '/' || path === '') {
       selectedCategory = 'all';
-      highlightCategory('all');
       showHome();
     } else if (path.indexOf('/restaurant/') === 0) {
       var id = parseInt(path.split('/')[2], 10);
@@ -75,19 +75,14 @@ function renderCategoryBar() {
   bar.innerHTML = html;
 }
 
-function selectCategory(catId, btn) {
+function selectCategory(catId) {
   selectedCategory = catId;
-  highlightCategory(catId);
   currentView = 'home';
   showGrid();
   window.location.hash = '/';
 }
 
-function highlightCategory(catId) {
-  document.querySelectorAll('.web-cat-chip').forEach(function(c) { c.classList.remove('active'); });
-  var chip = document.querySelector('.web-cat-chip[data-cat="' + catId + '"]');
-  if (chip) chip.classList.add('active');
-}
+function highlightCategory(catId) { /* handled by showGrid re-render */ }
 
 // ===== HOME / GRID =====
 function showHome() {
@@ -101,7 +96,29 @@ function showGrid() {
     ? appData.restaurants
     : appData.restaurants.filter(function(r) { return r.cuisine === selectedCategory; });
 
-  var html = '<h2 class="web-section-title">' + (selectedCategory === 'all' ? t('explore_all_restaurants') : t('explore_all_restaurants')) + '</h2>';
+  var html = '';
+
+  // Cuisine cards
+  html += '<div class="web-cuisine-section">';
+  html += '<h2 class="web-section-title">' + t('home_categories') + '</h2>';
+  html += '<div class="web-cuisine-grid">';
+  html += '<div class="web-cuisine-card' + (selectedCategory === 'all' ? ' active' : '') + '" onclick="selectCategory(\'all\')">' +
+    '<span class="cuisine-icon">🍽️</span>' +
+    '<div class="cuisine-name">' + t('nav_home') + '</div>' +
+    '<div class="cuisine-count">' + appData.restaurants.length + ' ' + t('home_places') + '</div>' +
+  '</div>';
+  appData.categories.forEach(function(c) {
+    var count = appData.restaurants.filter(function(r) { return r.cuisine === c.id; }).length;
+    html += '<div class="web-cuisine-card' + (selectedCategory === c.id ? ' active' : '') + '" onclick="selectCategory(\'' + c.id + '\')">' +
+      '<span class="cuisine-icon">' + c.icon + '</span>' +
+      '<div class="cuisine-name">' + c.name + '</div>' +
+      '<div class="cuisine-count">' + count + ' ' + t('home_places') + '</div>' +
+    '</div>';
+  });
+  html += '</div></div>';
+
+  // Restaurant grid
+  html += '<h2 class="web-section-title">' + (selectedCategory === 'all' ? t('explore_all_restaurants') : cName()) + '</h2>';
   html += '<div class="web-grid">';
   if (restaurants.length === 0) {
     html += '<div class="web-empty"><p style="color:var(--text-muted);font-size:18px">' + t('search_no_results') + '</p></div>';
@@ -110,6 +127,11 @@ function showGrid() {
   }
   html += '</div>';
   content.innerHTML = html;
+}
+
+function cName() {
+  var c = appData.categories.find(function(c) { return c.id === selectedCategory; });
+  return c ? c.name : '';
 }
 
 function handleSearch(query) {
