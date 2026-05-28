@@ -908,7 +908,7 @@ const appData = {
       address: '88 Sukhumvit Road',
       hours: '11:30 - 22:30',
       phone: '+1 (555) 555-3344',
-      image: 'images/Bangkok 88.jpg',
+      image: 'images/Bangkok-88.jpg',
       description: 'Bangkok street food favorites. Boat noodles, crispy pork belly, and papaya salad pounded in a traditional mortar. Loud, fast, and deliciously messy.',
       descriptionRu: 'Бангкокская уличная еда. Лодочная лапша, хрустящая свиная грудинка и салат из папайи.',
       features: ['Street food', 'Boat noodles', 'Spicy', 'Quick service'],
