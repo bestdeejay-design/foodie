@@ -43,6 +43,7 @@ function loadTheme() {
 // Navigation
 function openApp() {
   document.getElementById('landing').classList.add('hidden');
+  document.getElementById('webApp').classList.add('hidden');
   document.getElementById('app').classList.remove('hidden');
   localStorage.setItem('foodie_appOpen', 'true');
   updateBookingBadge();
@@ -55,6 +56,19 @@ function closeApp() {
   document.getElementById('app').classList.add('hidden');
   pageNav = ['home'];
   localStorage.setItem('foodie_appOpen', 'false');
+}
+
+function openWebApp() {
+  document.getElementById('landing').classList.add('hidden');
+  document.getElementById('webApp').classList.remove('hidden');
+  localStorage.setItem('foodie_webAppOpen', 'true');
+  if (typeof showGrid === 'function') showGrid();
+}
+
+function closeWebApp() {
+  document.getElementById('landing').classList.remove('hidden');
+  document.getElementById('webApp').classList.add('hidden');
+  localStorage.setItem('foodie_webAppOpen', 'false');
 }
 
 function showPage(pageName, btnElement) {

@@ -1,75 +1,49 @@
-// Foodie — Web Demo
+// Foodie — Web Demo (embedded)
 var currentView = 'home';
 var selectedCategory = 'all';
 var currentRestaurant = null;
 var searchTimer = null;
 
-// ===== APP LIFECYCLE =====
-function openWebApp() {
-  document.getElementById('landingPage').style.display = 'none';
-  document.getElementById('webApp').classList.add('visible');
-  localStorage.setItem('foodie_webAppOpen', 'true');
-  showHome();
-}
-
-function closeWebApp() {
-  document.getElementById('landingPage').style.display = '';
-  document.getElementById('webApp').classList.remove('visible');
-  localStorage.setItem('foodie_webAppOpen', 'false');
-}
-
-// ===== THEME =====
-function toggleThemeWeb() {
-  var html = document.documentElement;
-  var newTheme = html.getAttribute('data-theme') === 'light' ? 'dark' : 'light';
-  html.setAttribute('data-theme', newTheme);
-  updateThemeIcon();
-  localStorage.setItem('foodie-theme', newTheme);
-}
-
-function updateThemeIcon() {
+// ===== THEME (delegates to app.js toggleTheme, just updates web icons) =====
+function updateWebThemeIcon() {
   var isLight = document.documentElement.getAttribute('data-theme') === 'light';
-  var icon = document.getElementById('themeIcon');
+  var icon = document.getElementById('webThemeIcon');
   if (icon) icon.querySelector('use').setAttribute('href', isLight ? '#icon-moon' : '#icon-sun');
+}
+
+if (typeof window._webHooked === 'undefined') {
+  window._webHooked = true;
+  var origToggleTheme = toggleTheme;
+  toggleTheme = function() {
+    origToggleTheme();
+    updateWebThemeIcon();
+  };
 }
 
 // ===== LANGUAGE =====
 function switchLang(lang) {
   window.CURRENT_LANG = lang;
   localStorage.setItem('foodie-lang', lang);
-  document.getElementById('langLabel').textContent = lang.toUpperCase();
-  updateThemeIcon();
+  var lbl = document.getElementById('webLangLabel');
+  if (lbl) lbl.textContent = lang.toUpperCase();
+  updateWebThemeIcon();
   if (currentView === 'restaurant' && currentRestaurant) showRestaurant(currentRestaurant);
   else showHome();
 }
 
-// ===== INIT =====
+// ===== INIT (runs when web.js loads) =====
 (function init() {
-  var savedTheme = localStorage.getItem('foodie-theme');
-  if (savedTheme) document.documentElement.setAttribute('data-theme', savedTheme);
-  updateThemeIcon();
-  document.getElementById('langLabel').textContent = window.CURRENT_LANG.toUpperCase();
+  updateWebThemeIcon();
+  var lbl = document.getElementById('webLangLabel');
+  if (lbl) lbl.textContent = window.CURRENT_LANG.toUpperCase();
 
-  var search = document.getElementById('searchInput');
+  var search = document.getElementById('webSearchInput');
   if (search) search.addEventListener('input', function() {
     clearTimeout(searchTimer);
     var q = this.value;
     searchTimer = setTimeout(function() { handleSearch(q); }, 300);
   });
-
-  if (typeof appData === 'undefined') {
-    document.getElementById('mainContent').innerHTML = '<div style="padding:40px;text-align:center;color:var(--error)">Data not loaded</div>';
-    return;
-  }
-
-  // Restore app state if was open
-  var wasOpen = localStorage.getItem('foodie_webAppOpen');
-  if (wasOpen === 'true') {
-    openWebApp();
-  }
 })();
-
-function renderCategoryBar() { /* unused - cuisines are in showGrid */ }
 
 function navigateTo(path) {
   try {
@@ -80,28 +54,15 @@ function navigateTo(path) {
       var id = parseInt(path.split('/')[2], 10);
       if (id && !isNaN(id)) showRestaurant(id);
     }
-    window.location.hash = path;
   } catch(e) {
-    document.getElementById('mainContent').innerHTML = '<div style="padding:40px;text-align:center;color:var(--error)"><h3>Error</h3><p>' + e.message + '</p></div>';
+    document.getElementById('webContent').innerHTML = '<div style="padding:40px;text-align:center;color:var(--error)"><h3>Error</h3><p>' + e.message + '</p></div>';
   }
-}
-
-// ===== CATEGORY BAR =====
-function renderCategoryBar() {
-  var bar = document.getElementById('categoryBar');
-  var html = '<button class="web-cat-chip active" data-cat="all" onclick="selectCategory(\'all\', this)">' + t('nav_home') + '</button>';
-  appData.categories.forEach(function(c) {
-    var count = appData.restaurants.filter(function(r) { return r.cuisine === c.id; }).length;
-    html += '<button class="web-cat-chip" data-cat="' + c.id + '" onclick="selectCategory(\'' + c.id + '\', this)">' + c.icon + ' ' + c.name + ' <span style="opacity:0.5;font-weight:400">' + count + '</span></button>';
-  });
-  bar.innerHTML = html;
 }
 
 function selectCategory(catId) {
   selectedCategory = catId;
   currentView = 'home';
   showGrid();
-  window.location.hash = '/';
 }
 
 function highlightCategory(catId) { /* handled by showGrid re-render */ }
@@ -114,7 +75,7 @@ function showHome() {
 
 function showGrid() {
   try {
-  var content = document.getElementById('mainContent');
+  var content = document.getElementById('webContent');
   if (!content) return;
   var restaurants = selectedCategory === 'all'
     ? appData.restaurants
@@ -178,7 +139,7 @@ function handleSearch(query) {
            r.menu.some(function(m) { return m.name.toLowerCase().indexOf(q) > -1; });
   });
 
-  var content = document.getElementById('mainContent');
+  var content = document.getElementById('webContent');
   var html = '<h2 class="web-section-title">' + t('nav_search') + ': "' + query + '"</h2>';
   html += '<div class="web-grid">';
   if (matched.length === 0) {
@@ -331,7 +292,7 @@ function showRestaurant(id) {
   html += '</div>'; // end grid
   html += '</div>'; // end center-col
 
-  document.getElementById('mainContent').innerHTML = html;
+  document.getElementById('webContent').innerHTML = html;
   window.scrollTo(0, 0);
 }
 
@@ -387,7 +348,7 @@ function showBookingForm(restaurantId) {
   html += '<button class="web-book-btn" style="margin-top:8px" onclick="confirmWebBooking(' + r.id + ')">' + t('book_confirm') + '</button>';
   html += '</div></div>';
 
-  document.getElementById('mainContent').innerHTML = html;
+  document.getElementById('webContent').innerHTML = html;
 }
 
 function confirmWebBooking(restaurantId) {
@@ -419,5 +380,5 @@ function confirmWebBooking(restaurantId) {
   html += '<button class="web-back-btn" onclick="navigateTo(\'/\')" style="font-size:15px;padding:12px 24px;border:1.5px solid var(--border)">' + t('landing_exit') + '</button>';
   html += '</div>';
 
-  document.getElementById('mainContent').innerHTML = html;
+  document.getElementById('webContent').innerHTML = html;
 }
