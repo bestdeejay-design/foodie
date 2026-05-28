@@ -4,6 +4,20 @@ var selectedCategory = 'all';
 var currentRestaurant = null;
 var searchTimer = null;
 
+// ===== APP LIFECYCLE =====
+function openWebApp() {
+  document.getElementById('landingPage').style.display = 'none';
+  document.getElementById('webApp').classList.add('visible');
+  localStorage.setItem('foodie_webAppOpen', 'true');
+  showHome();
+}
+
+function closeWebApp() {
+  document.getElementById('landingPage').style.display = '';
+  document.getElementById('webApp').classList.remove('visible');
+  localStorage.setItem('foodie_webAppOpen', 'false');
+}
+
 // ===== THEME =====
 function toggleThemeWeb() {
   var html = document.documentElement;
@@ -47,7 +61,12 @@ function switchLang(lang) {
     document.getElementById('mainContent').innerHTML = '<div style="padding:40px;text-align:center;color:var(--error)">Data not loaded</div>';
     return;
   }
-  navigateTo(window.location.hash ? window.location.hash.slice(1) : '/');
+
+  // Restore app state if was open
+  var wasOpen = localStorage.getItem('foodie_webAppOpen');
+  if (wasOpen === 'true') {
+    openWebApp();
+  }
 })();
 
 function renderCategoryBar() { /* unused - cuisines are in showGrid */ }

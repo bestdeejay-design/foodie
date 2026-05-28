@@ -9,6 +9,55 @@
   <style>
     body { overflow-x: hidden; }
 
+    /* Landing */
+    .web-landing {
+      min-height: 100vh; display: flex; flex-direction: column; align-items: center;
+      justify-content: center; text-align: center; padding: 80px 24px 40px;
+      background: var(--gradient-bg);
+    }
+    .web-landing .landing-logo {
+      width: 100px; height: 100px; background: var(--bg-card); border-radius: 28px;
+      display: flex; align-items: center; justify-content: center; margin-bottom: 20px;
+    }
+    .web-landing .landing-logo svg { width: 56px; height: 56px; color: var(--primary); }
+    .web-landing h1 {
+      font-size: 64px; font-weight: 800; margin-bottom: 8px;
+      background: linear-gradient(135deg, var(--primary), var(--accent));
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+    }
+    .web-landing .tagline { font-size: 22px; color: var(--text-muted); margin-bottom: 12px; font-weight: 500; }
+    .web-landing .desc { font-size: 17px; color: var(--text-muted); max-width: 480px; line-height: 1.6; margin-bottom: 40px; }
+
+    .web-landing .features { display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; margin-bottom: 48px; max-width: 600px; }
+    .web-landing .feature {
+      background: var(--bg-card); padding: 24px 20px; border-radius: 20px;
+      display: flex; flex-direction: column; align-items: center; gap: 12px;
+      transition: transform 0.2s, background 0.2s; cursor: default;
+    }
+    .web-landing .feature:hover { transform: translateY(-4px); background: var(--bg-card-hover); }
+    .web-landing .feature svg { width: 36px; height: 36px; color: var(--primary); }
+    .web-landing .feature span { font-size: 14px; font-weight: 600; }
+
+    .web-open-btn {
+      background: var(--gradient-btn); color: #fff; border: none;
+      padding: 18px 48px; font-size: 18px; font-weight: 700; border-radius: 50px;
+      cursor: pointer; display: flex; align-items: center; gap: 12px;
+      box-shadow: 0 4px 24px var(--glow); transition: transform 0.2s, box-shadow 0.2s;
+    }
+    .web-open-btn:hover { transform: scale(1.05); box-shadow: 0 8px 32px var(--glow); }
+    .web-note { font-size: 13px; color: var(--text-muted); margin-top: 24px; }
+
+    /* App wrapper */
+    .web-app { display: none; flex-direction: column; min-height: 100vh; }
+    .web-app.visible { display: flex; }
+    .web-exit-btn {
+      display: flex; align-items: center; gap: 6px; padding: 6px 16px;
+      background: none; border: 1.5px solid var(--border); border-radius: 10px;
+      color: var(--text-muted); cursor: pointer; font-size: 13px; font-weight: 600;
+      transition: all 0.2s;
+    }
+    .web-exit-btn:hover { border-color: var(--primary); color: var(--primary); }
+
     .web-header {
       position: sticky; top: 0; z-index: 100;
       background: var(--bg-dark); border-bottom: 1px solid var(--border);
@@ -190,6 +239,31 @@
     </defs>
   </svg>
 
+  <!-- Landing Page -->
+  <div class="web-landing" id="landingPage">
+    <div class="landing-logo">
+      <svg><use href="#icon-home"/></svg>
+    </div>
+    <h1>Foodie</h1>
+    <p class="tagline">Discover & Book Great Places</p>
+    <p class="desc">Find the best restaurants and cafes near you. Reserve a table, save favorites, and chat directly with venues.</p>
+
+    <div class="features">
+      <div class="feature"><svg><use href="#icon-search"/></svg><span>Discover</span></div>
+      <div class="feature"><svg><use href="#icon-heart"/></svg><span>Save</span></div>
+      <div class="feature"><svg><use href="#icon-check"/></svg><span>Book</span></div>
+      <div class="feature"><svg><use href="#icon-location"/></svg><span>Explore</span></div>
+    </div>
+
+    <button class="web-open-btn" onclick="openWebApp()">
+      Open Demo <svg style="width:22px;height:22px"><use href="#icon-arrow"/></svg>
+    </button>
+
+    <p class="web-note">This is a demo template &bull; Works offline</p>
+  </div>
+
+  <!-- App -->
+  <div class="web-app" id="webApp">
   <header class="web-header">
     <div class="web-logo" onclick="navigateTo('/')">
       <svg><use href="#icon-home"/></svg> Foodie
@@ -206,10 +280,14 @@
       <button class="web-icon-btn" onclick="toggleThemeWeb()" title="Toggle theme" id="themeBtn">
         <svg id="themeIcon"><use href="#icon-sun"/></svg>
       </button>
+      <button class="web-exit-btn" onclick="closeWebApp()">
+        <svg style="width:16px;height:16px"><use href="#icon-arrow-left"/></svg> Exit
+      </button>
     </div>
   </header>
 
   <div class="web-content" id="mainContent"></div>
+  </div><!-- /web-app -->
 
   <script src="js/locales.js"></script>
   <script src="js/data.js"></script>
