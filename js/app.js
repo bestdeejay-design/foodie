@@ -857,8 +857,8 @@ function placeOrderMobile() {
   document.getElementById('content').innerHTML =
     '<div class="page-content" style="text-align:center;padding-top:40px">' +
     '<svg class="icon" style="width:64px;height:64px;color:var(--success);margin-bottom:16px"><use href="#icon-check"/></svg>' +
-    '<h3>Order Placed!</h3><p style="color:var(--text-muted);margin-bottom:16px">$' + total.toFixed(2) + ' &bull; Delivery: ' + del.time + ' min</p>' +
-    '<button class="btn-primary" onclick="showPage(\'orders\')">View Orders</button></div>';
+    '<h3>Order Placed!</h3><p style="color:var(--text-muted);margin:0 0 20px">$' + total.toFixed(2) + ' &bull; Delivery: ' + del.time + ' min</p>' +
+    '<button class="btn-primary" onclick="showPage(\'orders\')" style="width:100%;justify-content:center">View Orders</button></div>';
 }
 
 function renderOrdersMobile() {
