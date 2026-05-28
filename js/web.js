@@ -37,13 +37,16 @@ function switchLang(lang) {
   document.getElementById('langLabel').textContent = window.CURRENT_LANG.toUpperCase();
 
   var search = document.getElementById('searchInput');
-  search.addEventListener('input', function() {
+  if (search) search.addEventListener('input', function() {
     clearTimeout(searchTimer);
     var q = this.value;
     searchTimer = setTimeout(function() { handleSearch(q); }, 300);
   });
 
-  renderCategoryBar();
+  if (typeof appData === 'undefined') {
+    document.getElementById('mainContent').innerHTML = '<div style="padding:40px;text-align:center;color:var(--error)">Data not loaded</div>';
+    return;
+  }
   navigateTo(window.location.hash ? window.location.hash.slice(1) : '/');
 })();
 
@@ -91,7 +94,9 @@ function showHome() {
 }
 
 function showGrid() {
+  try {
   var content = document.getElementById('mainContent');
+  if (!content) return;
   var restaurants = selectedCategory === 'all'
     ? appData.restaurants
     : appData.restaurants.filter(function(r) { return r.cuisine === selectedCategory; });
@@ -127,6 +132,9 @@ function showGrid() {
   }
   html += '</div>';
   content.innerHTML = html;
+  } catch(e) {
+    content.innerHTML = '<div style="padding:40px;color:var(--error);text-align:center"><h3>Grid Error</h3><p>' + e.message + '</p></div>';
+  }
 }
 
 function cName() {
