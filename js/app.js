@@ -1,9 +1,5 @@
 // Foodie — Restaurant Finder Demo App
-
-function loc(fieldEn, fieldRu) {
-  if (window.CURRENT_LANG === 'ru' && fieldRu !== undefined && fieldRu !== '') return fieldRu;
-  return fieldEn;
-}
+// loc() and t() are in js/locales.js
 
 function switchLang(lang) {
   window.CURRENT_LANG = lang;
@@ -461,12 +457,11 @@ function renderChat() {
 }
 
 function updateChatBadge() {
-  const unread = appData.chats.reduce((sum, c) => sum + c.unread, 0);
-  const badge = document.querySelector('.bottom-nav [onclick*="chat"] .chat-badge');
-  if (badge) {
-    badge.textContent = unread;
-    badge.style.display = unread > 0 ? '' : 'none';
-  }
+  var unread = appData.chats.reduce(function(s, c) { return s + c.unread; }, 0);
+  var badge = document.querySelector('.header-actions .icon-btn[onclick*="chat"] span');
+  if (!badge) return;
+  badge.textContent = unread || '';
+  badge.style.display = unread > 0 ? '' : 'none';
 }
 
 // ============ SEARCH ============

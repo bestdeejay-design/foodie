@@ -5,12 +5,11 @@ var currentRestaurant = null;
 var searchTimer = null;
 
 // ===== LANGUAGE =====
-function switchLang(lang) {
+function switchLangWeb(lang) {
   window.CURRENT_LANG = lang;
   localStorage.setItem('foodie-lang', lang);
   var lbl = document.getElementById('webLangLabel');
   if (lbl) lbl.textContent = lang.toUpperCase();
-  updateWebThemeIcon();
   if (currentView === 'restaurant' && currentRestaurant) showRestaurant(currentRestaurant);
   else showHome();
 }
@@ -152,8 +151,8 @@ function showWebProfile() {
 
   html += '<h3 style="margin-bottom:12px">' + t('profile_language') + '</h3>';
   html += '<div style="display:flex;gap:10px">' +
-    '<button style="padding:10px 24px;border-radius:12px;border:1.5px solid ' + (window.CURRENT_LANG === 'en' ? 'var(--primary)' : 'var(--border)') + ';background:' + (window.CURRENT_LANG === 'en' ? 'var(--primary)' : 'transparent') + ';color:' + (window.CURRENT_LANG === 'en' ? '#fff' : 'var(--text)') + ';cursor:pointer;font-size:14px;font-weight:600" onclick="switchLang(\'en\')">' + t('profile_lang_en') + '</button>' +
-    '<button style="padding:10px 24px;border-radius:12px;border:1.5px solid ' + (window.CURRENT_LANG === 'ru' ? 'var(--primary)' : 'var(--border)') + ';background:' + (window.CURRENT_LANG === 'ru' ? 'var(--primary)' : 'transparent') + ';color:' + (window.CURRENT_LANG === 'ru' ? '#fff' : 'var(--text)') + ';cursor:pointer;font-size:14px;font-weight:600" onclick="switchLang(\'ru\')">' + t('profile_lang_ru') + '</button>' +
+    '<button style="padding:10px 24px;border-radius:12px;border:1.5px solid ' + (window.CURRENT_LANG === 'en' ? 'var(--primary)' : 'var(--border)') + ';background:' + (window.CURRENT_LANG === 'en' ? 'var(--primary)' : 'transparent') + ';color:' + (window.CURRENT_LANG === 'en' ? '#fff' : 'var(--text)') + ';cursor:pointer;font-size:14px;font-weight:600" onclick="switchLangWeb(\'en\')">' + t('profile_lang_en') + '</button>' +
+    '<button style="padding:10px 24px;border-radius:12px;border:1.5px solid ' + (window.CURRENT_LANG === 'ru' ? 'var(--primary)' : 'var(--border)') + ';background:' + (window.CURRENT_LANG === 'ru' ? 'var(--primary)' : 'transparent') + ';color:' + (window.CURRENT_LANG === 'ru' ? '#fff' : 'var(--text)') + ';cursor:pointer;font-size:14px;font-weight:600" onclick="switchLangWeb(\'ru\')">' + t('profile_lang_ru') + '</button>' +
   '</div>';
 
   html += '</div>';

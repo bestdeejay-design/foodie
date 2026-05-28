@@ -222,6 +222,7 @@
       <symbol id="icon-filter" viewBox="0 0 24 24">
         <path fill="currentColor" d="M14 12v7.88c.04.3-.06.62-.29.83a.996.996 0 0 1-1.41 0l-2.01-2.01a.989.989 0 0 1-.29-.83V12h-.03L4.21 4.62a1 1 0 0 1 .17-1.4c.19-.14.4-.22.62-.22h14c.22 0 .43.08.62.22a1 1 0 0 1 .17 1.4L14.03 12H14z"/>
       </symbol>
+      <symbol id="icon-globe" viewBox="0 0 24 24"><path fill="currentColor" d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 17.93c-3.95-.49-7-3.85-7-7.93 0-.62.08-1.21.21-1.79L9 15v1c0 1.1.9 2 2 2v1.93zm6.9-2.54c-.26-.81-1-1.39-1.9-1.39h-1v-3c0-.55-.45-1-1-1H8v-2h2c.55 0 1-.45 1-1V7h2c1.1 0 2-.9 2-2v-.41c2.93 1.19 5 4.06 5 7.41 0 2.08-.8 3.97-2.1 5.39z"/></symbol>
     </defs>
   </svg>
 
@@ -348,7 +349,7 @@
         <input type="text" id="webSearchInput" placeholder="Search restaurants, cuisines...">
       </div>
       <div class="web-header-actions">
-        <button class="web-lang-btn" onclick="switchLang(window.CURRENT_LANG==='en'?'ru':'en')">
+        <button class="web-lang-btn" onclick="switchLangWeb(window.CURRENT_LANG==='en'?'ru':'en')">
           <svg style="width:16px;height:16px;vertical-align:middle;margin-right:4px"><use href="#icon-globe"/></svg>
           <span id="webLangLabel">EN</span>
         </button>
