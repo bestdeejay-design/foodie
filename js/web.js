@@ -85,9 +85,15 @@ function showGrid() {
   try {
   var content = document.getElementById('webContent');
   if (!content) return;
-  var restaurants = selectedCategory === 'all'
-    ? appData.restaurants
-    : appData.restaurants.filter(function(r) { return r.cuisine === selectedCategory; });
+
+  var restaurants;
+  if (selectedCategory === 'favorites') {
+    restaurants = appData.restaurants.filter(function(r) { return appData.favorites.indexOf(r.id) > -1; });
+  } else if (selectedCategory === 'all') {
+    restaurants = appData.restaurants;
+  } else {
+    restaurants = appData.restaurants.filter(function(r) { return r.cuisine === selectedCategory; });
+  }
 
   var html = '';
 
@@ -98,6 +104,10 @@ function showGrid() {
   html += '<div class="web-cuisine-item' + (selectedCategory === 'all' ? ' active' : '') + '" onclick="selectCategory(\'all\')">' +
     '<div class="web-cuisine-circle"><span class="emoji">🍽️</span></div>' +
     '<div class="web-cuisine-label">' + t('nav_home') + '</div>' +
+  '</div>';
+  html += '<div class="web-cuisine-item' + (selectedCategory === 'favorites' ? ' active' : '') + '" onclick="selectCategory(\'favorites\')">' +
+    '<div class="web-cuisine-circle" style="border-color:var(--primary)"><span class="emoji">❤️</span></div>' +
+    '<div class="web-cuisine-label">' + t('nav_favorites') + '</div>' +
   '</div>';
   appData.categories.forEach(function(c) {
     var count = appData.restaurants.filter(function(r) { return r.cuisine === c.id; }).length;
@@ -124,6 +134,7 @@ function showGrid() {
 }
 
 function cName() {
+  if (selectedCategory === 'favorites') return t('nav_favorites');
   var c = appData.categories.find(function(c) { return c.id === selectedCategory; });
   return c ? c.name : '';
 }
