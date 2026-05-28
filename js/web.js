@@ -270,10 +270,18 @@ function showRestaurant(id) {
   // Description
   html += '<p class="web-detail-desc">' + desc + '</p>';
 
-  // Menu
-  html += '<h3 style="margin-bottom:16px">' + t('restaurant_full_menu') + '</h3>';
+  // Menu with tabs
+  html += '<div class="web-menu-tabs" id="menuTabs">';
+  menuCategories.forEach(function(cat, i) {
+    var sectionId = 'menu-' + cat.replace(/[^a-zA-Z0-9]/g, '');
+    html += '<button class="web-menu-tab' + (i === 0 ? ' active' : '') + '" data-section="' + sectionId + '" onclick="scrollToMenu(\'' + sectionId + '\', this)">' + cat + '</button>';
+  });
+  html += '</div>';
+
   menuCategories.forEach(function(cat) {
-    html += '<h4 style="margin:20px 0 10px;color:var(--primary);font-size:16px">' + cat + '</h4>';
+    var sectionId = 'menu-' + cat.replace(/[^a-zA-Z0-9]/g, '');
+    html += '<div class="web-menu-section" id="' + sectionId + '">';
+    html += '<h4>' + cat + '</h4>';
     r.menu.filter(function(m) { return m.category === cat; }).forEach(function(item) {
       html += '<div class="web-menu-item">' +
         '<div style="flex:1">' +
@@ -283,6 +291,7 @@ function showRestaurant(id) {
         '<span class="price">$' + item.price + '</span>' +
       '</div>';
     });
+    html += '</div>';
   });
 
   html += '</div>'; // end main
@@ -305,6 +314,35 @@ function showRestaurant(id) {
 
   document.getElementById('mainContent').innerHTML = html;
   window.scrollTo(0, 0);
+}
+
+function scrollToMenu(sectionId, btn) {
+  var el = document.getElementById(sectionId);
+  if (el) {
+    el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  }
+  document.querySelectorAll('.web-menu-tab').forEach(function(t) { t.classList.remove('active'); });
+  if (btn) btn.classList.add('active');
+}
+
+// Scroll spy for menu tabs
+if (typeof window._menuSpyAdded === 'undefined') {
+  window._menuSpyAdded = true;
+  window.addEventListener('scroll', function() {
+    var tabs = document.querySelectorAll('.web-menu-tab');
+    if (!tabs.length) return;
+    var sections = document.querySelectorAll('.web-menu-section');
+    var current = '';
+    sections.forEach(function(s) {
+      var rect = s.getBoundingClientRect();
+      if (rect.top <= 160) current = s.id;
+    });
+    if (current) {
+      tabs.forEach(function(t) {
+        t.classList.toggle('active', t.getAttribute('data-section') === current);
+      });
+    }
+  });
 }
 
 // ===== BOOKING FORM =====

@@ -111,6 +111,23 @@
     .web-menu-item p { margin: 0; font-size: 13px; color: var(--text-muted); }
     .web-menu-item .price { font-weight: 700; color: var(--success); font-size: 17px; white-space: nowrap; }
 
+    /* Menu category tabs */
+    .web-menu-tabs {
+      position: sticky; top: 76px; z-index: 50;
+      background: var(--bg-dark); border-bottom: 1px solid var(--border);
+      padding: 10px 0; margin: 0 0 24px;
+      display: flex; gap: 4px; overflow-x: auto;
+    }
+    .web-menu-tab {
+      flex-shrink: 0; padding: 8px 18px; border-radius: 20px; font-size: 13px; font-weight: 600;
+      background: transparent; color: var(--text-muted); border: none; cursor: pointer;
+      transition: all 0.2s; white-space: nowrap;
+    }
+    .web-menu-tab:hover { background: var(--bg-card); color: var(--text); }
+    .web-menu-tab.active { background: var(--primary); color: #fff; }
+    .web-menu-section { padding-top: 8px; }
+    .web-menu-section h4 { font-size: 16px; color: var(--primary); margin-bottom: 12px; padding-bottom: 8px; border-bottom: 2px solid var(--primary); display: inline-block; }
+
     .web-sidebar { position: sticky; top: 156px; }
     .web-info-card {
       background: var(--bg-card); border: 1px solid var(--border); border-radius: 20px; padding: 24px; margin-bottom: 20px;
