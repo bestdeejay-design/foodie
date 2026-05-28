@@ -1436,7 +1436,7 @@ function renderFavorites() {
         <svg class="icon" style="width:64px;height:64px;opacity:0.3;margin-bottom:16px"><use href="#icon-heart"/></svg>
         <p style="color:var(--text-muted)">${t('favorites_empty')}</p>
         <p style="font-size:13px;color:var(--text-muted);margin-bottom:20px">${t('favorites_empty_hint')}</p>
-        <button class="btn-primary" onclick="showPage('explore')">${t('favorites_browse')}</button>
+        <button onclick="showPage('explore')" style="padding:14px 32px;background:linear-gradient(135deg, var(--primary), #7C3AED);color:#fff;border:none;border-radius:14px;font-size:15px;font-weight:600;cursor:pointer;box-shadow:0 4px 15px rgba(37,99,235,0.3);transition:all 0.2s" onmouseover="this.style.transform='translateY(-1px)'" onmouseout="this.style.transform=''">${t('favorites_browse')}</button>
       </div>
     `;
   } else {
@@ -1662,12 +1662,12 @@ function renderRestaurant(id) {
 
   // Action buttons
   html += `
-    <div style="display:flex;gap:12px;margin-top:4px">
-      <button class="btn-primary" style="flex:1;justify-content:center" onclick="showPage('menu-${r.id}')">
-        <svg class="icon" style="width:20px;height:20px"><use href="#icon-food"/></svg> ${t('restaurant_full_menu')}
+    <div style="margin-top:8px;display:flex;flex-direction:column;gap:10px">
+      <button onclick="quickBook(${r.id})" style="width:100%;padding:18px 24px;background:linear-gradient(135deg, var(--primary), #7C3AED);color:#fff;border:none;border-radius:16px;font-size:16px;font-weight:700;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:10px;box-shadow:0 4px 15px rgba(37,99,235,0.3);transition:all 0.2s;letter-spacing:-0.2px" onmouseover="this.style.transform='translateY(-1px)';this.style.boxShadow='0 6px 20px rgba(37,99,235,0.4)'" onmouseout="this.style.transform='';this.style.boxShadow='0 4px 15px rgba(37,99,235,0.3)'">
+        <svg class="icon" style="width:22px;height:22px"><use href="#icon-calendar"/></svg> ${t('restaurant_book_table')}
       </button>
-      <button class="btn-primary" style="flex:1;justify-content:center;background:var(--success)" onclick="quickBook(${r.id})">
-        <svg class="icon" style="width:20px;height:20px"><use href="#icon-calendar"/></svg> ${t('restaurant_book_table')}
+      <button onclick="showPage('menu-${r.id}')" style="width:100%;padding:15px 24px;background:transparent;color:var(--text);border:1.5px solid var(--border);border-radius:16px;font-size:15px;font-weight:600;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:10px;transition:all 0.2s" onmouseover="this.style.borderColor='var(--primary)';this.style.color='var(--primary)';this.style.background='rgba(37,99,235,0.05)'" onmouseout="this.style.borderColor='var(--border)';this.style.color='';this.style.background=''">
+        <svg class="icon" style="width:20px;height:20px"><use href="#icon-food"/></svg> ${t('restaurant_full_menu')}
       </button>
     </div>
   `;
@@ -1707,7 +1707,7 @@ function quickBook(restaurantId) {
         <label style="font-size:13px;color:var(--text-muted);display:block;margin-bottom:6px">${t('book_special')}</label>
         <input type="text" id="bookSpecial" placeholder="${t('book_special_placeholder')}" style="width:100%;padding:12px;background:var(--bg-input);border:none;border-radius:8px;color:var(--text);font-size:14px">
       </div>
-      <button class="btn-primary" style="width:100%;justify-content:center" onclick="confirmBooking(${r.id})">
+      <button onclick="confirmBooking(${r.id})" style="width:100%;padding:18px;background:linear-gradient(135deg, var(--primary), #7C3AED);color:#fff;border:none;border-radius:16px;font-size:16px;font-weight:700;cursor:pointer;box-shadow:0 4px 15px rgba(37,99,235,0.3);transition:all 0.2s;letter-spacing:-0.2px" onmouseover="this.style.transform='translateY(-1px)';this.style.boxShadow='0 6px 20px rgba(37,99,235,0.4)'" onmouseout="this.style.transform='';this.style.boxShadow='0 4px 15px rgba(37,99,235,0.3)'">
         ${t('book_confirm')}
       </button>
     </div>
@@ -1745,7 +1745,7 @@ function confirmBooking(restaurantId) {
       <svg class="icon" style="width:64px;height:64px;color:var(--success)"><use href="#icon-check"/></svg>
       <h3 style="margin:16px 0 8px">${t('book_confirmed_title')}</h3>
       <p style="color:var(--text-muted);margin-bottom:16px">${name}<br>${formattedDate} at ${time}<br>${guests} ${t('home_guests')}</p>
-      <button class="btn-primary" onclick="showPage('bookings')">${t('bookings_view')}</button>
+      <button onclick="showPage('bookings')" style="padding:14px 32px;background:linear-gradient(135deg, var(--primary), #7C3AED);color:#fff;border:none;border-radius:14px;font-size:15px;font-weight:600;cursor:pointer;box-shadow:0 4px 15px rgba(37,99,235,0.3);transition:all 0.2s" onmouseover="this.style.transform='translateY(-1px)'" onmouseout="this.style.transform=''">${t('bookings_view')}</button>
     </div>
   `;
 }
@@ -1781,9 +1781,9 @@ function renderMenu(id) {
   });
 
   html += `
-    <div style="margin-top:20px">
-      <button class="btn-primary" style="width:100%;justify-content:center" onclick="quickBook(${r.id})">
-        <svg class="icon" style="width:20px;height:20px"><use href="#icon-calendar"/></svg> ${t('restaurant_book_table')}
+    <div style="margin-top:24px">
+      <button onclick="quickBook(${r.id})" style="width:100%;padding:18px 24px;background:linear-gradient(135deg, var(--primary), #7C3AED);color:#fff;border:none;border-radius:16px;font-size:16px;font-weight:700;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:10px;box-shadow:0 4px 15px rgba(37,99,235,0.3);transition:all 0.2s;letter-spacing:-0.2px" onmouseover="this.style.transform='translateY(-1px)';this.style.boxShadow='0 6px 20px rgba(37,99,235,0.4)'" onmouseout="this.style.transform='';this.style.boxShadow='0 4px 15px rgba(37,99,235,0.3)'">
+        <svg class="icon" style="width:22px;height:22px"><use href="#icon-calendar"/></svg> ${t('restaurant_book_table')}
       </button>
     </div>
   `;
