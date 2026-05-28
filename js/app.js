@@ -22,6 +22,7 @@ function toggleTheme() {
   const newTheme = currentTheme === 'light' ? 'dark' : 'light';
   html.setAttribute('data-theme', newTheme);
   updateThemeIcons(newTheme);
+  updateWebThemeIcon(newTheme);
   localStorage.setItem('foodie-theme', newTheme);
 }
 
@@ -32,6 +33,14 @@ function updateThemeIcons(theme) {
       use.setAttribute('href', theme === 'light' ? '#icon-moon' : '#icon-sun');
     }
   });
+}
+
+function updateWebThemeIcon(theme) {
+  var icon = document.getElementById('webThemeIcon');
+  if (icon) {
+    var use = icon.querySelector('use');
+    if (use) use.setAttribute('href', (theme || document.documentElement.getAttribute('data-theme')) === 'light' ? '#icon-moon' : '#icon-sun');
+  }
 }
 
 function loadTheme() {

@@ -4,22 +4,6 @@ var selectedCategory = 'all';
 var currentRestaurant = null;
 var searchTimer = null;
 
-// ===== THEME (delegates to app.js toggleTheme, just updates web icons) =====
-function updateWebThemeIcon() {
-  var isLight = document.documentElement.getAttribute('data-theme') === 'light';
-  var icon = document.getElementById('webThemeIcon');
-  if (icon) icon.querySelector('use').setAttribute('href', isLight ? '#icon-moon' : '#icon-sun');
-}
-
-if (typeof window._webHooked === 'undefined') {
-  window._webHooked = true;
-  var origToggleTheme = toggleTheme;
-  toggleTheme = function() {
-    origToggleTheme();
-    updateWebThemeIcon();
-  };
-}
-
 // ===== LANGUAGE =====
 function switchLang(lang) {
   window.CURRENT_LANG = lang;
@@ -33,7 +17,6 @@ function switchLang(lang) {
 
 // ===== INIT (runs when web.js loads) =====
 (function init() {
-  updateWebThemeIcon();
   var lbl = document.getElementById('webLangLabel');
   if (lbl) lbl.textContent = window.CURRENT_LANG.toUpperCase();
 
