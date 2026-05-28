@@ -177,7 +177,7 @@ function renderCard(r) {
   var name = loc(r.name, r.nameRu);
   var desc = loc(r.description, r.descriptionRu);
   var features = (r.featuresRu && window.CURRENT_LANG === 'ru') ? r.featuresRu : r.features;
-  var bg = r.image ? 'background-image:url(' + r.image + ');background-size:cover;background-position:center' : 'background:linear-gradient(135deg, var(--bg-light), var(--bg-card))';
+  var bg = r.image ? 'background-image:url(\'' + r.image + '\');background-size:cover;background-position:center' : 'background:linear-gradient(135deg, var(--bg-light), var(--bg-card))';
 
   return '<div class="web-card" onclick="navigateTo(\'/restaurant/' + r.id + '\')">' +
     '<div class="web-card-img" style="' + bg + '">' +
@@ -226,7 +226,7 @@ function showRestaurant(id) {
   var desc = loc(r.description, r.descriptionRu);
   var features = (r.featuresRu && window.CURRENT_LANG === 'ru') ? r.featuresRu : r.features;
   var popular = (r.popularRu && window.CURRENT_LANG === 'ru') ? r.popularRu : r.popular;
-  var bg = r.image ? 'background-image:url(' + r.image + ');background-size:cover;background-position:center' : 'background:linear-gradient(135deg, var(--bg-light), var(--bg-card))';
+  var bg = r.image ? 'background-image:url(\'' + r.image + '\');background-size:cover;background-position:center' : 'background:linear-gradient(135deg, var(--bg-light), var(--bg-card))';
 
   var menuCategories = [];
   var seen = {};
