@@ -30,7 +30,7 @@
 }
 
 /* Light theme */
-[data-theme="light"] {
+html[data-theme="light"] {
   --bg-dark: #FAF9F6;
   --bg-card: #FFFFFF;
   --bg-card-hover: #F5F4F0;
@@ -39,12 +39,14 @@
   --text: #1A1D28;
   --text-muted: #717886;
   --border: #E5E0D8;
-  
   --shadow: rgba(0, 0, 0, 0.06);
   --glow: rgba(224, 82, 60, 0.15);
-  
   --gradient-bg: linear-gradient(180deg, #FAF9F6 0%, #F0EEE8 100%);
   --gradient-btn: linear-gradient(135deg, #E0523C, #F0705A);
+}
+
+body {
+  transition: background 0.3s, color 0.3s;
 }
 
 * {
@@ -270,7 +272,7 @@ body {
   transition: background 0.3s, border-color 0.3s;
 }
 
-[data-theme="light"] .phone-frame {
+html[data-theme="light"] .phone-frame {
   border-color: #cbd5e1;
 }
 
