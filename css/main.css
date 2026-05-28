@@ -1,39 +1,39 @@
 /* ========================================
-   UniverID - Дизайн-система
-   Технологический институт
+   Foodie — Design System
+   Restaurant & Cafe Finder
    ======================================== */
 
 /* === CSS VARIABLES === */
 :root {
-  /* Основные цвета */
-  --primary: #2563EB;
-  --primary-dark: #1D4ED8;
-  --primary-light: #3B82F6;
-  --secondary: #0EA5E9;
-  --accent: #06D6A0;
+  /* Core colors */
+  --primary: #E0523C;
+  --primary-dark: #C0392B;
+  --primary-light: #F0705A;
+  --secondary: #6366F1;
+  --accent: #F5A623;
   
-  /* Фоны */
-  --bg-dark: #0F172A;
+  /* Backgrounds */
+  --bg-dark: #12161C;
   --bg-card: rgba(255, 255, 255, 0.04);
   --bg-card-hover: rgba(255, 255, 255, 0.08);
-  --bg-light: #F8FAFC;
+  --bg-light: #FAF9F6;
   
-  /* Текст */
-  --text-primary: #FFFFFF;
-  --text-secondary: #CBD5E1;
-  --text-muted: #94A3B8;
-  --text-dark: #1E293B;
+  /* Text */
+  --text-primary: #F5F5F7;
+  --text-secondary: #C0C6CE;
+  --text-muted: #8B95A5;
+  --text-dark: #1A1D28;
   
-  /* Статусы */
-  --success: #10B981;
-  --warning: #F59E0B;
-  --error: #EF4444;
-  --info: #3B82F6;
+  /* Status */
+  --success: #27AE60;
+  --warning: #F39C12;
+  --error: #E74C3C;
+  --info: #6366F1;
   
-  /* Градиенты */
-  --gradient-primary: linear-gradient(135deg, #2563EB 0%, #0EA5E9 100%);
-  --gradient-hero: radial-gradient(circle at 30% 40%, rgba(37, 99, 235, 0.2), transparent 60%),
-                   radial-gradient(circle at 70% 80%, rgba(0, 209, 255, 0.15), transparent 60%);
+  /* Gradients */
+  --gradient-primary: linear-gradient(135deg, #E0523C 0%, #F0705A 100%);
+  --gradient-hero: radial-gradient(circle at 30% 40%, rgba(224, 82, 60, 0.12), transparent 60%),
+                    radial-gradient(circle at 70% 80%, rgba(245, 166, 35, 0.08), transparent 60%);
   
   /* Размеры */
   --radius-sm: 8px;
@@ -252,7 +252,7 @@ a:hover {
   top: 0;
   left: 0;
   right: 0;
-  background: rgba(15, 23, 42, 0.95);
+  background: rgba(18, 22, 28, 0.95);
   backdrop-filter: blur(10px);
   border-bottom: 1px solid rgba(255, 255, 255, 0.1);
   z-index: 1000;

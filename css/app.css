@@ -1,44 +1,50 @@
-/* UniverID Mobile Demo App Styles */
+/* Foodie — Restaurant Finder App Styles */
 
 /* CSS Variables for theming */
 :root {
-  --primary: #2563EB;
-  --primary-dark: #1D4ED8;
-  --success: #10B981;
-  --warning: #F59E0B;
-  --error: #EF4444;
+  --primary: #E0523C;
+  --primary-dark: #C0392B;
+  --primary-light: #F0705A;
+  --accent: #F5A623;
+  --secondary: #6366F1;
+  --success: #27AE60;
+  --warning: #F39C12;
+  --error: #E74C3C;
   
   /* Dark theme (default) */
-  --bg-dark: #0F172A;
-  --bg-card: #1E293B;
-  --bg-light: #334155;
-  --bg-input: #1a2332;
-  --text: #F8FAFC;
-  --text-muted: #94A3B8;
-  --border: #334155;
+  --bg-dark: #12161C;
+  --bg-card: #1A2030;
+  --bg-card-hover: #222A3A;
+  --bg-light: #222A3A;
+  --bg-input: #151A24;
+  --text: #F5F5F7;
+  --text-muted: #8B95A5;
+  --border: #2A3040;
   
-  --shadow: rgba(0, 0, 0, 0.3);
-  --glow: rgba(37, 99, 235, 0.4);
+  --shadow: rgba(0, 0, 0, 0.25);
+  --glow: rgba(224, 82, 60, 0.3);
   
   /* Gradients */
-  --gradient-bg: linear-gradient(180deg, #0F172A 0%, #1E293B 100%);
-  --gradient-btn: linear-gradient(90deg, #2563EB, #10B981);
+  --gradient-bg: linear-gradient(180deg, #12161C 0%, #1A2030 100%);
+  --gradient-btn: linear-gradient(135deg, #E0523C, #F0705A);
 }
 
 /* Light theme */
 [data-theme="light"] {
-  --bg-dark: #F8FAFC;
+  --bg-dark: #FAF9F6;
   --bg-card: #FFFFFF;
-  --bg-light: #E2E8F0;
-  --bg-input: #f1f5f9;
-  --text: #1E293B;
-  --text-muted: #64748B;
-  --border: #E2E8F0;
+  --bg-card-hover: #F5F4F0;
+  --bg-light: #F0EEE8;
+  --bg-input: #F5F4F0;
+  --text: #1A1D28;
+  --text-muted: #717886;
+  --border: #E5E0D8;
   
-  --shadow: rgba(0, 0, 0, 0.1);
-  --glow: rgba(37, 99, 235, 0.2);
+  --shadow: rgba(0, 0, 0, 0.06);
+  --glow: rgba(224, 82, 60, 0.15);
   
-  --gradient-bg: linear-gradient(180deg, #F8FAFC 0%, #E2E8F0 100%);
+  --gradient-bg: linear-gradient(180deg, #FAF9F6 0%, #F0EEE8 100%);
+  --gradient-btn: linear-gradient(135deg, #E0523C, #F0705A);
 }
 
 * {
@@ -648,7 +654,7 @@ body {
 }
 
 .dashboard-card.accent {
-  background: linear-gradient(135deg, rgba(37, 99, 235, 0.3), rgba(16, 185, 129, 0.3));
+  background: linear-gradient(135deg, rgba(224,82,60,0.15), rgba(245,166,35,0.15));
 }
 
 /* Exit Button */

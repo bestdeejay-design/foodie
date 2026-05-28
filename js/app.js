@@ -1310,7 +1310,7 @@ function renderRestaurantCard(r) {
   return `
     <div class="dashboard-card" style="margin-bottom:12px;padding:0;overflow:hidden" onclick="showPage('restaurant-${r.id}')">
       <div style="height:140px;${r.image ? `background-image:url('${r.image}');background-size:cover;background-position:center;` : 'background:linear-gradient(135deg, var(--bg-light), var(--bg-card));'}display:flex;align-items:flex-end;justify-content:flex-end;padding:12px">
-        <button style="background:rgba(0,0,0,0.5);border:none;border-radius:50%;width:36px;height:36px;display:flex;align-items:center;justify-content:center;color:${isFav ? '#ef4444' : '#fff'};cursor:pointer;z-index:1" onclick="event.stopPropagation();toggleFavorite(${r.id})">
+        <button style="background:rgba(0,0,0,0.5);border:none;border-radius:50%;width:36px;height:36px;display:flex;align-items:center;justify-content:center;color:${isFav ? 'var(--primary)' : '#fff'};cursor:pointer;z-index:1" onclick="event.stopPropagation();toggleFavorite(${r.id})">
           <svg style="width:20px;height:20px"><use href="#icon-heart"/></svg>
         </button>
       </div>
@@ -1320,7 +1320,7 @@ function renderRestaurantCard(r) {
           <span style="font-size:11px;font-weight:600;color:var(--primary)">${r.price}</span>
         </div>
         <div style="display:flex;align-items:center;gap:8px;margin-bottom:8px">
-          <span style="display:flex;align-items:center;gap:4px;color:#f59e0b;font-weight:600;font-size:13px">
+          <span style="display:flex;align-items:center;gap:4px;color:var(--accent);font-weight:600;font-size:13px">
             <svg style="width:14px;height:14px"><use href="#icon-star"/></svg>
             ${r.rating}
           </span>
@@ -1436,7 +1436,7 @@ function renderFavorites() {
         <svg class="icon" style="width:64px;height:64px;opacity:0.3;margin-bottom:16px"><use href="#icon-heart"/></svg>
         <p style="color:var(--text-muted)">${t('favorites_empty')}</p>
         <p style="font-size:13px;color:var(--text-muted);margin-bottom:20px">${t('favorites_empty_hint')}</p>
-        <button onclick="showPage('explore')" style="padding:14px 32px;background:linear-gradient(135deg, var(--primary), #7C3AED);color:#fff;border:none;border-radius:14px;font-size:15px;font-weight:600;cursor:pointer;box-shadow:0 4px 15px rgba(37,99,235,0.3);transition:all 0.2s" onmouseover="this.style.transform='translateY(-1px)'" onmouseout="this.style.transform=''">${t('favorites_browse')}</button>
+        <button onclick="showPage('explore')" style="padding:14px 32px;background:linear-gradient(135deg, var(--primary), var(--primary-light));color:#fff;border:none;border-radius:14px;font-size:15px;font-weight:600;cursor:pointer;box-shadow:0 4px 15px var(--glow);transition:all 0.2s" onmouseover="this.style.transform='translateY(-1px)'" onmouseout="this.style.transform=''">${t('favorites_browse')}</button>
       </div>
     `;
   } else {
@@ -1468,7 +1468,7 @@ function renderBookings() {
               <div style="font-size:13px;color:var(--text-muted);margin-top:4px">${b.date} at ${b.time}</div>
               <div style="font-size:12px;color:var(--text-muted);margin-top:2px">${b.guests} ${t('bookings_guests')}${b.special ? ' &bull; ' + b.special : ''}</div>
             </div>
-            <span style="font-size:11px;padding:4px 10px;border-radius:12px;background:${b.status === 'confirmed' ? 'rgba(16,185,129,0.2)' : 'rgba(245,158,11,0.2)'};color:${b.status === 'confirmed' ? '#10B981' : '#F59E0B'};font-weight:600">
+            <span style="font-size:11px;padding:4px 10px;border-radius:12px;background:${b.status === 'confirmed' ? 'rgba(39,174,96,0.15)' : 'rgba(243,156,18,0.15)'};color:${b.status === 'confirmed' ? 'var(--success)' : 'var(--warning)'};font-weight:600">
               ${statusLabel}
             </span>
           </div>
@@ -1602,7 +1602,7 @@ function renderRestaurant(id) {
   // Hero image placeholder
   html += `
       <div style="height:180px;${r.image ? `background-image:url('${r.image}');background-size:cover;background-position:center;` : 'background:linear-gradient(135deg, var(--bg-light), var(--bg-card));'}border-radius:16px;margin-bottom:16px;display:flex;align-items:center;justify-content:center;position:relative">
-      <button style="position:absolute;top:12px;right:12px;background:rgba(0,0,0,0.5);border:none;border-radius:50%;width:40px;height:40px;display:flex;align-items:center;justify-content:center;color:${isFav ? '#ef4444' : '#fff'};cursor:pointer;z-index:1" onclick="toggleFavorite(${r.id})">
+      <button style="position:absolute;top:12px;right:12px;background:rgba(0,0,0,0.5);border:none;border-radius:50%;width:40px;height:40px;display:flex;align-items:center;justify-content:center;color:${isFav ? 'var(--primary)' : '#fff'};cursor:pointer;z-index:1" onclick="toggleFavorite(${r.id})">
         <svg style="width:22px;height:22px"><use href="#icon-heart"/></svg>
       </button>
       <div style="font-size:64px;opacity:0.3">${appData.categories.find(c => c.id === r.cuisine)?.icon || '🍽️'}</div>
@@ -1613,7 +1613,7 @@ function renderRestaurant(id) {
   html += `
     <h2 style="margin:0 0 4px">${name}</h2>
     <div style="display:flex;align-items:center;gap:8px;margin-bottom:12px;flex-wrap:wrap">
-      <span style="display:flex;align-items:center;gap:4px;color:#f59e0b;font-weight:600">
+      <span style="display:flex;align-items:center;gap:4px;color:var(--accent);font-weight:600">
         <svg style="width:16px;height:16px"><use href="#icon-star"/></svg> ${r.rating}
       </span>
       <span style="font-size:13px;color:var(--text-muted)">(${r.reviews} ${t('restaurant_reviews')})</span>
@@ -1663,10 +1663,10 @@ function renderRestaurant(id) {
   // Action buttons
   html += `
     <div style="margin-top:8px;display:flex;flex-direction:column;gap:10px">
-      <button onclick="quickBook(${r.id})" style="width:100%;padding:18px 24px;background:linear-gradient(135deg, var(--primary), #7C3AED);color:#fff;border:none;border-radius:16px;font-size:16px;font-weight:700;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:10px;box-shadow:0 4px 15px rgba(37,99,235,0.3);transition:all 0.2s;letter-spacing:-0.2px" onmouseover="this.style.transform='translateY(-1px)';this.style.boxShadow='0 6px 20px rgba(37,99,235,0.4)'" onmouseout="this.style.transform='';this.style.boxShadow='0 4px 15px rgba(37,99,235,0.3)'">
+      <button onclick="quickBook(${r.id})" style="width:100%;padding:18px 24px;background:linear-gradient(135deg, var(--primary), var(--primary-light));color:#fff;border:none;border-radius:16px;font-size:16px;font-weight:700;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:10px;box-shadow:0 4px 15px var(--glow);transition:all 0.2s;letter-spacing:-0.2px" onmouseover="this.style.transform='translateY(-1px)';this.style.boxShadow='0 6px 24px var(--glow)'" onmouseout="this.style.transform='';this.style.boxShadow='0 4px 15px var(--glow)'">
         <svg class="icon" style="width:22px;height:22px"><use href="#icon-calendar"/></svg> ${t('restaurant_book_table')}
       </button>
-      <button onclick="showPage('menu-${r.id}')" style="width:100%;padding:15px 24px;background:transparent;color:var(--text);border:1.5px solid var(--border);border-radius:16px;font-size:15px;font-weight:600;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:10px;transition:all 0.2s" onmouseover="this.style.borderColor='var(--primary)';this.style.color='var(--primary)';this.style.background='rgba(37,99,235,0.05)'" onmouseout="this.style.borderColor='var(--border)';this.style.color='';this.style.background=''">
+      <button onclick="showPage('menu-${r.id}')" style="width:100%;padding:15px 24px;background:transparent;color:var(--text);border:1.5px solid var(--border);border-radius:16px;font-size:15px;font-weight:600;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:10px;transition:all 0.2s" onmouseover="this.style.borderColor='var(--primary)';this.style.color='var(--primary)';this.style.background:'var(--bg-card-hover)'" onmouseout="this.style.borderColor='var(--border)';this.style.color='';this.style.background=''">
         <svg class="icon" style="width:20px;height:20px"><use href="#icon-food"/></svg> ${t('restaurant_full_menu')}
       </button>
     </div>
@@ -1707,7 +1707,7 @@ function quickBook(restaurantId) {
         <label style="font-size:13px;color:var(--text-muted);display:block;margin-bottom:6px">${t('book_special')}</label>
         <input type="text" id="bookSpecial" placeholder="${t('book_special_placeholder')}" style="width:100%;padding:12px;background:var(--bg-input);border:none;border-radius:8px;color:var(--text);font-size:14px">
       </div>
-      <button onclick="confirmBooking(${r.id})" style="width:100%;padding:18px;background:linear-gradient(135deg, var(--primary), #7C3AED);color:#fff;border:none;border-radius:16px;font-size:16px;font-weight:700;cursor:pointer;box-shadow:0 4px 15px rgba(37,99,235,0.3);transition:all 0.2s;letter-spacing:-0.2px" onmouseover="this.style.transform='translateY(-1px)';this.style.boxShadow='0 6px 20px rgba(37,99,235,0.4)'" onmouseout="this.style.transform='';this.style.boxShadow='0 4px 15px rgba(37,99,235,0.3)'">
+      <button onclick="confirmBooking(${r.id})" style="width:100%;padding:18px;background:linear-gradient(135deg, var(--primary), var(--primary-light));color:#fff;border:none;border-radius:16px;font-size:16px;font-weight:700;cursor:pointer;box-shadow:0 4px 15px var(--glow);transition:all 0.2s;letter-spacing:-0.2px" onmouseover="this.style.transform='translateY(-1px)';this.style.boxShadow='0 6px 24px var(--glow)'" onmouseout="this.style.transform='';this.style.boxShadow='0 4px 15px var(--glow)'">
         ${t('book_confirm')}
       </button>
     </div>
@@ -1745,7 +1745,7 @@ function confirmBooking(restaurantId) {
       <svg class="icon" style="width:64px;height:64px;color:var(--success)"><use href="#icon-check"/></svg>
       <h3 style="margin:16px 0 8px">${t('book_confirmed_title')}</h3>
       <p style="color:var(--text-muted);margin-bottom:16px">${name}<br>${formattedDate} at ${time}<br>${guests} ${t('home_guests')}</p>
-      <button onclick="showPage('bookings')" style="padding:14px 32px;background:linear-gradient(135deg, var(--primary), #7C3AED);color:#fff;border:none;border-radius:14px;font-size:15px;font-weight:600;cursor:pointer;box-shadow:0 4px 15px rgba(37,99,235,0.3);transition:all 0.2s" onmouseover="this.style.transform='translateY(-1px)'" onmouseout="this.style.transform=''">${t('bookings_view')}</button>
+      <button onclick="showPage('bookings')" style="padding:14px 32px;background:linear-gradient(135deg, var(--primary), var(--primary-light));color:#fff;border:none;border-radius:14px;font-size:15px;font-weight:600;cursor:pointer;box-shadow:0 4px 15px var(--glow);transition:all 0.2s" onmouseover="this.style.transform='translateY(-1px)'" onmouseout="this.style.transform=''">${t('bookings_view')}</button>
     </div>
   `;
 }
@@ -1782,7 +1782,7 @@ function renderMenu(id) {
 
   html += `
     <div style="margin-top:24px">
-      <button onclick="quickBook(${r.id})" style="width:100%;padding:18px 24px;background:linear-gradient(135deg, var(--primary), #7C3AED);color:#fff;border:none;border-radius:16px;font-size:16px;font-weight:700;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:10px;box-shadow:0 4px 15px rgba(37,99,235,0.3);transition:all 0.2s;letter-spacing:-0.2px" onmouseover="this.style.transform='translateY(-1px)';this.style.boxShadow='0 6px 20px rgba(37,99,235,0.4)'" onmouseout="this.style.transform='';this.style.boxShadow='0 4px 15px rgba(37,99,235,0.3)'">
+      <button onclick="quickBook(${r.id})" style="width:100%;padding:18px 24px;background:linear-gradient(135deg, var(--primary), var(--primary-light));color:#fff;border:none;border-radius:16px;font-size:16px;font-weight:700;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:10px;box-shadow:0 4px 15px var(--glow);transition:all 0.2s;letter-spacing:-0.2px" onmouseover="this.style.transform='translateY(-1px)';this.style.boxShadow='0 6px 24px var(--glow)'" onmouseout="this.style.transform='';this.style.boxShadow='0 4px 15px var(--glow)'">
         <svg class="icon" style="width:22px;height:22px"><use href="#icon-calendar"/></svg> ${t('restaurant_book_table')}
       </button>
     </div>
