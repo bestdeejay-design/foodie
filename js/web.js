@@ -49,15 +49,19 @@ function switchLang(lang) {
 })();
 
 function navigateTo(path) {
-  if (path === '/' || path === '') {
-    selectedCategory = 'all';
-    highlightCategory('all');
-    showHome();
-  } else if (path.startsWith('/restaurant/')) {
-    var id = parseInt(path.split('/')[2]);
-    if (id) showRestaurant(id);
+  try {
+    if (path === '/' || path === '') {
+      selectedCategory = 'all';
+      highlightCategory('all');
+      showHome();
+    } else if (path.indexOf('/restaurant/') === 0) {
+      var id = parseInt(path.split('/')[2], 10);
+      if (id && !isNaN(id)) showRestaurant(id);
+    }
+    window.location.hash = path;
+  } catch(e) {
+    document.getElementById('mainContent').innerHTML = '<div style="padding:40px;text-align:center;color:var(--error)"><h3>Error</h3><p>' + e.message + '</p></div>';
   }
-  window.location.hash = path;
 }
 
 // ===== CATEGORY BAR =====
