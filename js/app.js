@@ -13,7 +13,7 @@ function switchLang(lang) {
 
 // appData is in js/data.js
 
-var history = ['home'];
+let pageNav = ['home'];
 
 // Theme management
 function toggleTheme() {
@@ -53,7 +53,7 @@ function openApp() {
 function closeApp() {
   document.getElementById('landing').classList.remove('hidden');
   document.getElementById('app').classList.add('hidden');
-  history = ['home'];
+  pageNav = ['home'];
   localStorage.setItem('foodie_appOpen', 'false');
 }
 
@@ -63,20 +63,20 @@ function showPage(pageName, btnElement) {
     btnElement.classList.add('active');
   }
 
-  history.push(pageName);
+  pageNav.push(pageName);
   updateHeader(pageName);
   renderContent(pageName);
 
   localStorage.setItem('foodie_lastPage', pageName);
-  localStorage.setItem('foodie_history', JSON.stringify(history));
+  localStorage.setItem('foodie_history', JSON.stringify(pageNav));
 
-  document.getElementById('backBtn').classList.toggle('hidden', history.length <= 1);
+  document.getElementById('backBtn').classList.toggle('hidden', pageNav.length <= 1);
 }
 
 function goBack() {
-  if (history.length > 1) {
-    history.pop();
-    const prevPage = history[history.length - 1];
+  if (pageNav.length > 1) {
+    pageNav.pop();
+    const prevPage = pageNav[pageNav.length - 1];
 
     const navPages = ['home', 'explore', 'favorites', 'bookings', 'chat'];
     if (navPages.includes(prevPage)) {
@@ -90,8 +90,8 @@ function goBack() {
     renderContent(prevPage);
 
     localStorage.setItem('foodie_lastPage', prevPage);
-    localStorage.setItem('foodie_history', JSON.stringify(history));
-    document.getElementById('backBtn').classList.toggle('hidden', history.length <= 1);
+    localStorage.setItem('foodie_history', JSON.stringify(pageNav));
+    document.getElementById('backBtn').classList.toggle('hidden', pageNav.length <= 1);
   }
 }
 
@@ -757,11 +757,11 @@ document.addEventListener('DOMContentLoaded', () => {
 
     if (lastPage && savedHistory) {
       try {
-        history = JSON.parse(savedHistory);
-        if (history.length > 0) {
+        pageNav = JSON.parse(savedHistory);
+        if (pageNav.length > 0) {
           updateHeader(lastPage);
           renderContent(lastPage);
-          document.getElementById('backBtn').classList.toggle('hidden', history.length <= 1);
+          document.getElementById('backBtn').classList.toggle('hidden', pageNav.length <= 1);
         }
       } catch (e) {
         showPage('home');
