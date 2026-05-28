@@ -291,6 +291,10 @@
           <button class="icon-btn" onclick="showPage('search')" title="Search">
             <svg class="icon"><use href="#icon-search"/></svg>
           </button>
+          <button class="icon-btn" onclick="showPage('cart')" title="Cart" style="position:relative">
+            <svg class="icon"><use href="#icon-home"/></svg>
+            <span id="cartBadge" style="position:absolute;top:-2px;right:-2px;background:var(--primary);color:#fff;font-size:9px;font-weight:700;min-width:16px;height:16px;border-radius:8px;display:none;align-items:center;justify-content:center">0</span>
+          </button>
           <div class="profile-icon" onclick="showPage('profile')">
             <svg class="icon"><use href="#icon-user"/></svg>
           </div>

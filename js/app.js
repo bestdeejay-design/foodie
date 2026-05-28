@@ -127,6 +127,8 @@ function updateHeader(pageName) {
     chat: 'nav_chat',
     profile: 'nav_profile',
     search: 'nav_search',
+    cart: 'nav_bookings',
+    orders: 'nav_bookings',
     restaurant: 'nav_restaurant',
     menu: 'nav_menu'
   };
@@ -143,6 +145,8 @@ function renderContent(pageName) {
   else if (pageName === 'chat') content.innerHTML = renderChat();
   else if (pageName === 'profile') content.innerHTML = renderProfile();
   else if (pageName === 'search') content.innerHTML = renderSearch();
+  else if (pageName === 'cart') content.innerHTML = renderCartMobile();
+  else if (pageName === 'orders') content.innerHTML = renderOrdersMobile();
   else if (pageName.startsWith('restaurant-')) {
     const id = parseInt(pageName.split('-')[1]);
     content.innerHTML = renderRestaurant(id);
@@ -689,12 +693,15 @@ function renderMenu(id) {
       const itemName = loc(item.name, item.nameRu);
       html += `
         <div class="dashboard-card" style="margin-bottom:8px;padding:14px">
-          <div style="display:flex;justify-content:space-between;align-items:flex-start">
+          <div style="display:flex;justify-content:space-between;align-items:flex-start;gap:8px">
             <div style="flex:1">
               <div style="font-weight:600;font-size:14px">${itemName}</div>
               <div style="font-size:12px;color:var(--text-muted);margin-top:4px">${item.description}</div>
             </div>
-            <div style="font-weight:700;color:var(--success);font-size:16px;margin-left:12px">$${item.price}</div>
+            <div style="display:flex;flex-direction:column;align-items:flex-end;gap:6px">
+              <div style="font-weight:700;color:var(--success);font-size:16px">$${item.price}</div>
+              <button onclick="addToCartMobile(appData.restaurants[${r.id - 1}],{name:'${item.name.replace(/'/g,"\\'")}',nameRu:'${(item.nameRu||'').replace(/'/g,"\\'")}',price:${item.price}})" style="width:30px;height:30px;border-radius:10px;border:1.5px solid var(--border);background:var(--bg-card);color:var(--primary);cursor:pointer;font-size:16px;font-weight:700;display:flex;align-items:center;justify-content:center">+</button>
+            </div>
           </div>
         </div>
       `;
@@ -764,6 +771,116 @@ function renderProfile() {
       </div>
     </div>
   `;
+}
+
+// ============ CART & DELIVERY ============
+function hasDelivery(id) { return !!appData.delivery[id]; }
+function getDelivery(id) { return appData.delivery[id] || { fee: 0, time: '—' }; }
+
+function addToCartMobile(restaurant, item) {
+  var existing = -1;
+  for (var i = 0; i < appData.cart.length; i++) {
+    if (appData.cart[i].restaurantId === restaurant.id && appData.cart[i].name === item.name) {
+      existing = i; break;
+    }
+  }
+  if (existing > -1) appData.cart[existing].qty++;
+  else appData.cart.push({ restaurantId: restaurant.id, restaurantName: restaurant.name, name: item.name, nameRu: item.nameRu, price: item.price, qty: 1 });
+  updateMobileCartBadge();
+}
+
+function updateMobileCartBadge() {
+  var count = appData.cart.reduce(function(s, i) { return s + i.qty; }, 0);
+  var badge = document.getElementById('cartBadge');
+  if (!badge) return;
+  badge.textContent = count || '';
+  badge.style.display = count > 0 ? '' : 'none';
+}
+
+function renderCartMobile() {
+  var cart = appData.cart;
+  var subtotal = cart.reduce(function(s, i) { return s + i.price * i.qty; }, 0);
+  var rId = cart.length > 0 ? cart[0].restaurantId : null;
+  var del = rId ? getDelivery(rId) : { fee: 0, time: '—' };
+  var fee = cart.length > 0 ? del.fee : 0;
+  var total = subtotal + fee;
+
+  var html = '<div class="page-content">';
+  html += '<h3>🛒 Your Order</h3>';
+
+  if (cart.length === 0) {
+    html += '<div style="text-align:center;padding:40px"><p style="color:var(--text-muted)">Cart is empty</p></div>';
+  } else {
+    html += '<p style="color:var(--text-muted);font-size:13px;margin-bottom:16px">from <strong>' + cart[0].restaurantName + '</strong></p>';
+    cart.forEach(function(item, i) {
+      html += '<div class="dashboard-card" style="padding:14px;margin-bottom:8px"><div style="display:flex;justify-content:space-between;align-items:center"><div style="flex:1"><strong>' + loc(item.name, item.nameRu) + '</strong><div style="display:flex;align-items:center;gap:8px;margin-top:8px">' +
+        '<button onclick="changeMobileQty(' + i + ',-1)" style="width:26px;height:26px;border-radius:8px;border:1px solid var(--border);background:var(--bg-card);color:var(--text);cursor:pointer;font-size:14px">&minus;</button>' +
+        '<span style="font-weight:600;min-width:16px;text-align:center">' + item.qty + '</span>' +
+        '<button onclick="changeMobileQty(' + i + ',1)" style="width:26px;height:26px;border-radius:8px;border:1px solid var(--border);background:var(--bg-card);color:var(--text);cursor:pointer;font-size:14px">+</button>' +
+        '</div></div>' +
+        '<span style="font-weight:700;color:var(--success)">$' + (item.price * item.qty).toFixed(2) + '</span></div></div>';
+    });
+    html += '<div class="dashboard-card" style="padding:14px;margin-top:12px">';
+    html += '<div class="info-row"><span>Subtotal</span><span>$' + subtotal.toFixed(2) + '</span></div>';
+    html += '<div class="info-row"><span>Delivery</span><span>$' + fee.toFixed(2) + '</span></div>';
+    html += '<div class="info-row" style="border-bottom:none"><strong>Total</strong><strong style="color:var(--primary);font-size:16px">$' + total.toFixed(2) + '</strong></div>';
+    html += '</div>';
+    html += '<div style="margin-top:12px"><label style="font-size:12px;color:var(--text-muted);display:block;margin-bottom:4px">Delivery Address</label><input type="text" id="delAddrMobile" value="' + (appData.profile.address || '') + '" style="width:100%;padding:12px;background:var(--bg-input);border:none;border-radius:10px;color:var(--text);font-size:14px"></div>';
+    html += '<button class="btn-primary" style="width:100%;margin-top:12px;justify-content:center" onclick="placeOrderMobile()">Place Order &bull; $' + total.toFixed(2) + '</button>';
+  }
+  html += '</div>';
+  return html;
+}
+
+function changeMobileQty(index, delta) {
+  appData.cart[index].qty += delta;
+  if (appData.cart[index].qty <= 0) appData.cart.splice(index, 1);
+  updateMobileCartBadge();
+  document.getElementById('content').innerHTML = renderCartMobile();
+}
+
+function placeOrderMobile() {
+  var cart = appData.cart;
+  if (cart.length === 0) return;
+  var address = document.getElementById('delAddrMobile').value;
+  var subtotal = cart.reduce(function(s, i) { return s + i.price * i.qty; }, 0);
+  var del = getDelivery(cart[0].restaurantId);
+  var total = subtotal + del.fee;
+
+  appData.orders.push({
+    id: Date.now(), restaurantName: cart[0].restaurantName, items: cart.slice(),
+    subtotal: subtotal, deliveryFee: del.fee, total: total, address: address, status: 'confirmed',
+    time: new Date().toLocaleString()
+  });
+  appData.cart = [];
+  updateMobileCartBadge();
+  document.getElementById('content').innerHTML =
+    '<div class="page-content" style="text-align:center;padding-top:40px">' +
+    '<svg class="icon" style="width:64px;height:64px;color:var(--success);margin-bottom:16px"><use href="#icon-check"/></svg>' +
+    '<h3>Order Placed!</h3><p style="color:var(--text-muted);margin-bottom:16px">$' + total.toFixed(2) + ' &bull; Delivery: ' + del.time + ' min</p>' +
+    '<button class="btn-primary" onclick="showPage(\'orders\')">View Orders</button></div>';
+}
+
+function renderOrdersMobile() {
+  var orders = appData.orders;
+  var html = '<div class="page-content"><h3>📋 Orders</h3>';
+  if (orders.length === 0) {
+    html += '<div style="text-align:center;padding:40px"><p style="color:var(--text-muted)">No orders yet</p></div>';
+  } else {
+    orders.slice().reverse().forEach(function(o) {
+      var itemList = o.items.map(function(i) { return i.qty + 'x ' + loc(i.name, i.nameRu); }).join(', ');
+      html += '<div class="dashboard-card" style="margin-bottom:12px;padding:16px"><div style="display:flex;justify-content:space-between;margin-bottom:8px">' +
+        '<strong>' + o.restaurantName + '</strong>' +
+        '<span style="font-size:11px;padding:4px 10px;border-radius:12px;background:rgba(39,174,96,0.15);color:var(--success);font-weight:600">' + o.status + '</span>' +
+        '</div>' +
+        '<div style="font-size:12px;color:var(--text-muted);margin-bottom:6px">' + itemList + '</div>' +
+        '<div style="display:flex;justify-content:space-between;font-size:13px"><span style="color:var(--text-muted)">' + o.time + '</span><strong>$' + o.total.toFixed(2) + '</strong></div>' +
+        '<div style="font-size:11px;color:var(--text-muted);margin-top:4px"><svg class="icon" style="width:12px;height:12px;vertical-align:middle;margin-right:4px"><use href="#icon-location"/></svg>' + o.address + '</div>' +
+      '</div>';
+    });
+  }
+  html += '</div>';
+  return html;
 }
 
 // ============ INIT ============
