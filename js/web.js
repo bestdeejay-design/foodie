@@ -179,8 +179,6 @@ function selectCategory(catId) {
   showGrid();
 }
 
-function highlightCategory(catId) { /* handled by showGrid re-render */ }
-
 // ===== HOME / GRID =====
 function showHome() {
   currentView = 'home';
