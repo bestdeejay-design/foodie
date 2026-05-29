@@ -458,10 +458,10 @@ function renderChat() {
 
 function updateChatBadge() {
   var unread = appData.chats.reduce(function(s, c) { return s + c.unread; }, 0);
-  var badge = document.querySelector('.header-actions .icon-btn[onclick*="chat"] span');
+  var badge = document.getElementById('headerChatBadge');
   if (!badge) return;
   badge.textContent = unread || '';
-  badge.style.display = unread > 0 ? '' : 'none';
+  badge.style.display = unread > 0 ? 'flex' : 'none';
 }
 
 // ============ SEARCH ============
