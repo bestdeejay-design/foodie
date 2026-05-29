@@ -198,7 +198,7 @@ window.LOCALES = {
 
     // Chat
     chat_title: 'Сообщения',
-    chat_support: 'Поддержка Foodie',
+    chat_support: 'Поддержка Амбар',
     chat_support_msg: 'Чем мы можем помочь?',
     chat_new_menu: 'Вышло новое сезонное меню!',
     chat_booking_msg: 'Мы получили вашу заявку на бронирование',
