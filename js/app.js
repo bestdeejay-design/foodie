@@ -879,7 +879,22 @@ function renderOrdersMobile() {
 }
 
 // ============ INIT ============
+function translateLanding() {
+  document.querySelectorAll('[data-i18n]').forEach(function(el) {
+    var key = el.getAttribute('data-i18n');
+    if (key) el.textContent = t(key);
+  });
+  document.title = t('landing_title') + ' — Restaurant Finder';
+  var webLogo = document.querySelector('.web-logo');
+  if (webLogo) {
+    var img = webLogo.querySelector('img');
+    var txt = webLogo.childNodes[webLogo.childNodes.length - 1];
+    if (txt && txt.nodeType === 3) txt.textContent = ' ' + t('landing_title');
+  }
+}
+
 document.addEventListener('DOMContentLoaded', () => {
+  translateLanding();
   loadTheme();
 
   const wasAppOpen = localStorage.getItem('foodie_appOpen');

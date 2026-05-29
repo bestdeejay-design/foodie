@@ -10,6 +10,10 @@ function switchLangWeb(lang) {
   localStorage.setItem('foodie-lang', lang);
   var lbl = document.getElementById('webLangLabel');
   if (lbl) lbl.textContent = lang.toUpperCase();
+  // Update header logo text
+  var logoEl = document.querySelector('.web-logo [data-i18n]');
+  if (logoEl) logoEl.textContent = t('landing_title');
+  document.title = t('landing_title') + ' — Restaurant Finder';
   if (currentView === 'restaurant' && currentRestaurant) showRestaurant(currentRestaurant);
   else showHome();
 }

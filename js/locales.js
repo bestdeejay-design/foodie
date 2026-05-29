@@ -10,6 +10,7 @@ window.LOCALES = {
     landing_book: 'Book',
     landing_chat: 'Chat',
     landing_open: 'Open Demo',
+    landing_web: 'Web Demo',
     landing_note: 'This is a demo template • Works offline',
     landing_exit: 'Back to Home',
 
@@ -128,7 +129,7 @@ window.LOCALES = {
 
   ru: {
     // Landing
-    landing_title: 'Foodie',
+    landing_title: 'Амбар',
     landing_subtitle: 'Находи и бронируй лучшие места',
     landing_desc: 'Лучшие рестораны и кафе рядом с вами. Бронируйте столик, сохраняйте избранное и общайтесь с заведениями напрямую.',
     landing_discover: 'Поиск',
@@ -136,6 +137,7 @@ window.LOCALES = {
     landing_book: 'Бронь',
     landing_chat: 'Чат',
     landing_open: 'Открыть демо',
+    landing_web: 'Веб-демо',
     landing_note: 'Это демо-шаблон • Работает офлайн',
     landing_exit: 'На главную',
 

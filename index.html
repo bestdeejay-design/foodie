@@ -236,40 +236,40 @@
       <div class="logo">
         <img src="images/chamomile.jpeg" alt="Logo" style="width:56px;height:56px;border-radius:16px;object-fit:cover">
       </div>
-      <h1>Foodie</h1>
-      <p class="tagline">Discover & Book Great Places</p>
-      <p class="desc">Find the best restaurants and cafes near you. Reserve a table, save favorites, and chat directly with venues.</p>
-      
+      <h1 data-i18n="landing_title">Foodie</h1>
+      <p class="tagline" data-i18n="landing_subtitle">Discover & Book Great Places</p>
+      <p class="desc" data-i18n="landing_desc">Find the best restaurants and cafes near you. Reserve a table, save favorites, and chat directly with venues.</p>
+
       <div class="features">
         <div class="feature">
           <svg class="icon"><use href="#icon-search"/></svg>
-          <span>Discover</span>
+          <span data-i18n="landing_discover">Discover</span>
         </div>
         <div class="feature">
           <svg class="icon"><use href="#icon-heart"/></svg>
-          <span>Save</span>
+          <span data-i18n="landing_save">Save</span>
         </div>
         <div class="feature">
           <svg class="icon"><use href="#icon-calendar"/></svg>
-          <span>Book</span>
+          <span data-i18n="landing_book">Book</span>
         </div>
         <div class="feature">
           <svg class="icon"><use href="#icon-chat"/></svg>
-          <span>Chat</span>
+          <span data-i18n="landing_chat">Chat</span>
         </div>
       </div>
       
       <button class="btn-primary" onclick="openApp()">
-        Mobile Demo
+        <span data-i18n="landing_open">Mobile Demo</span>
         <svg class="icon"><use href="#icon-arrow"/></svg>
       </button>
 
       <button class="btn-primary" onclick="openWebApp()" style="background:transparent;border:2px solid var(--border);box-shadow:none;margin-top:12px;color:var(--text)">
-        Web Demo
+        <span data-i18n="landing_web">Web Demo</span>
         <svg class="icon"><use href="#icon-arrow"/></svg>
       </button>
       
-      <p class="note">This is a demo template &bull; Works offline</p>
+      <p class="note" data-i18n="landing_note">This is a demo template &bull; Works offline</p>
     </div>
   </div>
 
@@ -342,7 +342,7 @@
   <div id="webApp" class="page hidden">
     <header class="web-header">
       <div class="web-logo" onclick="navigateTo('/')">
-        <img src="images/chamomile.jpeg" alt="Logo" style="width:30px;height:30px;border-radius:8px;object-fit:cover"> Foodie
+        <img src="images/chamomile.jpeg" alt="Logo" style="width:30px;height:30px;border-radius:8px;object-fit:cover"> <span data-i18n="landing_title">Foodie</span>
       </div>
       <div class="web-search">
         <svg><use href="#icon-search"/></svg>
